@@ -321,6 +321,28 @@ footer{background:var(--brown);padding:48px 24px;text-align:center}
 .f-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:52px;color:rgba(255,255,255,.8);display:block;margin-bottom:10px}
 .f-date{font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:5px;color:var(--gold);opacity:.6}
 
+/* ── FLOATING PHOTOS ── */
+.floaters{
+  position:fixed;inset:0;z-index:0;
+  pointer-events:none;overflow:hidden;
+}
+.floater{
+  position:absolute;
+  border-radius:50%;
+  object-fit:cover;
+  opacity:0.1;
+  filter:blur(0.5px);
+  animation:swim linear infinite;
+  will-change:transform;
+}
+@keyframes swim{
+  0%  {transform:translate(0,0) rotate(0deg) scale(1)}
+  25% {transform:translate(30px,-40px) rotate(8deg) scale(1.05)}
+  50% {transform:translate(-20px,-80px) rotate(-5deg) scale(0.95)}
+  75% {transform:translate(40px,-120px) rotate(10deg) scale(1.03)}
+  100%{transform:translate(0,-160px) rotate(0deg) scale(1);opacity:0}
+}
+
 /* ── MUSIC PLAYER ── */
 .music-bar{
   position:fixed;bottom:24px;right:24px;z-index:9999;
@@ -427,6 +449,9 @@ footer{background:var(--brown);padding:48px 24px;text-align:center}
 </style>
 </head>
 <body>
+
+<!-- FLOATING PHOTOS -->
+<div class="floaters" id="floaters"></div>
 
 <!-- HERO -->
 <section class="hero">
@@ -649,6 +674,69 @@ footer{background:var(--brown);padding:48px 24px;text-align:center}
 </footer>
 
 <script>
+// Floating photos
+(function(){
+  var container = document.getElementById('floaters');
+  var sizes = [60, 75, 50, 85, 65, 55, 90, 70];
+  var count = 0;
+
+  function spawn(){
+    var img = document.createElement('img');
+    img.src = 'float.png';
+    img.className = 'floater';
+
+    var size = sizes[count % sizes.length] + Math.random() * 20;
+    var startX = Math.random() * (window.innerWidth - size);
+    var dur = 8 + Math.random() * 10;
+    var delay = Math.random() * 4;
+    var drift = (Math.random() - 0.5) * 120;
+
+    img.style.cssText = [
+      'width:' + size + 'px',
+      'height:' + size + 'px',
+      'left:' + startX + 'px',
+      'bottom:-' + (size + 20) + 'px',
+      'animation:none',
+      'opacity:0.12',
+      'border-radius:50%',
+      'box-shadow:0 4px 20px rgba(196,160,122,0.3)'
+    ].join(';');
+
+    container.appendChild(img);
+    count++;
+
+    var start = null;
+    var totalHeight = window.innerHeight + size + 40;
+
+    function animate(ts){
+      if(!start) start = ts;
+      var progress = (ts - start - delay * 1000) / (dur * 1000);
+      if(progress < 0){ requestAnimationFrame(animate); return; }
+      if(progress >= 1){ img.remove(); return; }
+
+      var y = -totalHeight * progress;
+      var x = drift * Math.sin(progress * Math.PI * 2);
+      var scale = 0.9 + Math.sin(progress * Math.PI) * 0.2;
+      var opacity = progress < 0.1 ? progress * 1.2
+                  : progress > 0.8 ? (1 - progress) * 5 * 0.12
+                  : 0.12;
+      var rotate = Math.sin(progress * Math.PI * 3) * 12;
+
+      img.style.transform = 'translateX(' + x + 'px) translateY(' + y + 'px) scale(' + scale + ') rotate(' + rotate + 'deg)';
+      img.style.opacity = opacity;
+      requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+  }
+
+  // Запускаем первые сразу
+  for(var i = 0; i < 5; i++){
+    setTimeout(spawn, i * 800);
+  }
+  // Потом каждые 2 секунды
+  setInterval(spawn, 2000);
+})();
+
 // Countdown
 (function(){
   var target = new Date('2026-08-24T16:00:00').getTime();
