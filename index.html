@@ -321,6 +321,59 @@ footer{background:var(--brown);padding:48px 24px;text-align:center}
 .f-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:52px;color:rgba(255,255,255,.8);display:block;margin-bottom:10px}
 .f-date{font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:5px;color:var(--gold);opacity:.6}
 
+/* ── INTRO SPLASH ── */
+.intro{
+  position:fixed;inset:0;z-index:99999;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;cursor:pointer;
+  background:linear-gradient(155deg,#faf5ef 0%,#ede5db 40%,#f5ede4 70%,#e8ddd4 100%);
+  transition:opacity .8s ease, transform .8s ease;
+}
+.intro.hide{opacity:0;transform:scale(1.04);pointer-events:none}
+
+.intro-rose{
+  position:absolute;
+  pointer-events:none;opacity:.7;
+}
+.intro-rose-tl{top:-60px;left:-60px;width:220px}
+.intro-rose-br{bottom:-60px;right:-60px;width:200px;transform:rotate(180deg)}
+
+.intro-tag{
+  font-family:'Montserrat',sans-serif;
+  font-size:10px;letter-spacing:5px;
+  color:var(--brown-md);opacity:.6;
+  margin-bottom:16px;
+}
+.intro-name{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;font-weight:300;
+  font-size:clamp(80px,22vw,140px);
+  color:var(--brown);line-height:.9;
+  text-shadow:0 4px 30px rgba(196,160,122,.3);
+  margin-bottom:20px;
+}
+.intro-date{
+  font-family:'Montserrat',sans-serif;
+  font-size:clamp(11px,3vw,13px);
+  letter-spacing:6px;color:var(--brown-md);
+  margin-bottom:40px;
+}
+.intro-btn{
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  animation:pulse-btn 2s ease-in-out infinite;
+}
+.intro-btn span{
+  font-family:'Montserrat',sans-serif;
+  font-size:9px;letter-spacing:4px;
+  color:var(--brown-md);opacity:.55;
+}
+.intro-btn svg{opacity:.4}
+@keyframes pulse-btn{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(6px)}
+}
+
 /* ── FLOATING PHOTOS ── */
 .floaters{
   position:fixed;inset:0;z-index:0;
@@ -449,6 +502,20 @@ footer{background:var(--brown);padding:48px 24px;text-align:center}
 </style>
 </head>
 <body>
+
+<!-- INTRO SPLASH -->
+<div class="intro" id="intro">
+  <svg class="intro-rose intro-rose-tl" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg"><g opacity=".9"><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(0,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#f9f4ef" transform="rotate(51.4,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(102.9,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#f9f4ef" transform="rotate(154.3,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(205.7,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#f9f4ef" transform="rotate(257.1,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(308.6,140,140)"/><path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#f2e8de" transform="rotate(25.7,140,140)"/><path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#ede3d8" transform="rotate(85.7,140,140)"/><path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#f2e8de" transform="rotate(145.7,140,140)"/><path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#ede3d8" transform="rotate(205.7,140,140)"/><path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#f2e8de" transform="rotate(265.7,140,140)"/><circle cx="140" cy="140" r="24" fill="#d8c9ba"/><circle cx="140" cy="140" r="16" fill="#ccb9a8"/><circle cx="140" cy="140" r="9" fill="#c4ae9d"/></g></svg>
+  <svg class="intro-rose intro-rose-br" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg"><g opacity=".85"><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(0,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#f9f4ef" transform="rotate(51.4,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(102.9,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#f9f4ef" transform="rotate(154.3,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(205.7,140,140)"/><circle cx="140" cy="140" r="24" fill="#d8c9ba"/><circle cx="140" cy="140" r="16" fill="#ccb9a8"/></g></svg>
+
+  <div class="intro-tag">— ҚЫЗ ҰЗАТУ —</div>
+  <div class="intro-name">Гүлсім</div>
+  <div class="intro-date">24 · 08 · 2026</div>
+  <div class="intro-btn">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#5a3826" stroke-width="1.2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+    <span>БАСУ</span>
+  </div>
+</div>
 
 <!-- FLOATING PHOTOS -->
 <div class="floaters" id="floaters"></div>
@@ -836,27 +903,17 @@ playBtn.addEventListener('click', function(e){
   isPlaying ? stopPlay() : startPlay();
 });
 
-// Трюк: запустить заглушённым → сразу снять mute (работает на Android)
-setTimeout(function(){
-  audio.muted = true;
-  audio.play().then(function(){
-    isPlaying = true;
-    playBtn.innerHTML = iconPause;
-    musicBar.classList.add('playing');
-    setTimeout(function(){
-      audio.muted = false;
-      fadeIn();
-    }, 100);
-  }).catch(function(){
-    // iOS заблокировал — ждём первого касания
-    document.addEventListener('touchstart', function u(){
-      startPlay(); document.removeEventListener('touchstart', u);
-    }, {once:true});
-    document.addEventListener('click', function u(){
-      startPlay(); document.removeEventListener('click', u);
-    }, {once:true});
-  });
-}, 2000);
+// Заставка → музыка
+var intro = document.getElementById('intro');
+intro.addEventListener('click', openSite);
+intro.addEventListener('touchend', function(e){ e.preventDefault(); openSite(); });
+
+function openSite(){
+  if(intro.classList.contains('hide')) return;
+  intro.classList.add('hide');
+  startPlay();
+  setTimeout(function(){ intro.style.display='none'; }, 900);
+}
 </script>
 </body>
 </html>
