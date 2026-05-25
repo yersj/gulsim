@@ -674,7 +674,7 @@ document.getElementById('rsvpForm').addEventListener('submit', function(e) {
   fetch(SHEET_URL, {
     method: 'POST',
     mode: 'no-cors',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'text/plain' },
     body: JSON.stringify({ name: name, attendance: labels[att.value] })
   })
   .then(function() {
@@ -696,18 +696,26 @@ var isPlaying = false;
 var iconPlay  = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
 var iconPause = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
 
-audio.volume = 0.45;
+audio.volume = 0;
 
 function startPlay(){
   audio.play().then(function(){
     isPlaying = true;
     playBtn.innerHTML = iconPause;
     musicBar.classList.add('playing');
-  }).catch(function(e){ console.log('audio error:', e); });
+    // плавное нарастание громкости
+    var vol = 0;
+    var fade = setInterval(function(){
+      vol = Math.min(vol + 0.05, 0.45);
+      audio.volume = vol;
+      if(vol >= 0.45) clearInterval(fade);
+    }, 80);
+  }).catch(function(){});
 }
 
 function stopPlay(){
   audio.pause();
+  audio.volume = 0;
   isPlaying = false;
   playBtn.innerHTML = iconPlay;
   musicBar.classList.remove('playing');
@@ -717,6 +725,21 @@ playBtn.addEventListener('click', function(e){
   e.stopPropagation();
   isPlaying ? stopPlay() : startPlay();
 });
+
+// Автостарт через 2 секунды
+setTimeout(function(){
+  if(!isPlaying) startPlay();
+}, 2000);
+
+// Если браузер заблокировал автоплей — запустить при первом касании
+document.addEventListener('touchstart', function firstTouch(){
+  if(!isPlaying) startPlay();
+  document.removeEventListener('touchstart', firstTouch);
+}, {once:true});
+document.addEventListener('click', function firstClick(){
+  if(!isPlaying) startPlay();
+  document.removeEventListener('click', firstClick);
+}, {once:true});
 </script>
 </body>
 </html>
