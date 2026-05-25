@@ -677,29 +677,31 @@ footer{background:var(--brown);padding:48px 24px;text-align:center}
 // Floating photos
 (function(){
   var container = document.getElementById('floaters');
-  var sizes = [60, 75, 50, 85, 65, 55, 90, 70];
+  var sizes = [110, 140, 100, 160, 120, 130, 150, 115];
   var count = 0;
 
-  function spawn(){
+  function spawn(big){
     var img = document.createElement('img');
     img.src = 'float.png';
     img.className = 'floater';
 
-    var size = sizes[count % sizes.length] + Math.random() * 20;
+    var size = big
+      ? 160 + Math.random() * 60
+      : sizes[count % sizes.length] + Math.random() * 30;
     var startX = Math.random() * (window.innerWidth - size);
-    var dur = 8 + Math.random() * 10;
-    var delay = Math.random() * 4;
-    var drift = (Math.random() - 0.5) * 120;
+    var dur = big ? 6 + Math.random() * 4 : 10 + Math.random() * 8;
+    var maxOpacity = big ? 0.28 : 0.18;
+    var drift = (Math.random() - 0.5) * 140;
 
     img.style.cssText = [
       'width:' + size + 'px',
       'height:' + size + 'px',
       'left:' + startX + 'px',
       'bottom:-' + (size + 20) + 'px',
-      'animation:none',
-      'opacity:0.12',
+      'opacity:0',
       'border-radius:50%',
-      'box-shadow:0 4px 20px rgba(196,160,122,0.3)'
+      'box-shadow:0 6px 30px rgba(196,160,122,0.4)',
+      'border:2px solid rgba(196,160,122,0.25)'
     ].join(';');
 
     container.appendChild(img);
@@ -710,17 +712,16 @@ footer{background:var(--brown);padding:48px 24px;text-align:center}
 
     function animate(ts){
       if(!start) start = ts;
-      var progress = (ts - start - delay * 1000) / (dur * 1000);
-      if(progress < 0){ requestAnimationFrame(animate); return; }
+      var progress = (ts - start) / (dur * 1000);
       if(progress >= 1){ img.remove(); return; }
 
       var y = -totalHeight * progress;
       var x = drift * Math.sin(progress * Math.PI * 2);
-      var scale = 0.9 + Math.sin(progress * Math.PI) * 0.2;
-      var opacity = progress < 0.1 ? progress * 1.2
-                  : progress > 0.8 ? (1 - progress) * 5 * 0.12
-                  : 0.12;
-      var rotate = Math.sin(progress * Math.PI * 3) * 12;
+      var scale = 0.92 + Math.sin(progress * Math.PI) * 0.15;
+      var opacity = progress < 0.12 ? (progress / 0.12) * maxOpacity
+                  : progress > 0.75 ? ((1 - progress) / 0.25) * maxOpacity
+                  : maxOpacity;
+      var rotate = Math.sin(progress * Math.PI * 2.5) * 10;
 
       img.style.transform = 'translateX(' + x + 'px) translateY(' + y + 'px) scale(' + scale + ') rotate(' + rotate + 'deg)';
       img.style.opacity = opacity;
@@ -729,12 +730,14 @@ footer{background:var(--brown);padding:48px 24px;text-align:center}
     requestAnimationFrame(animate);
   }
 
-  // Запускаем первые сразу
-  for(var i = 0; i < 5; i++){
-    setTimeout(spawn, i * 800);
+  // При открытии — сразу 4 крупных
+  for(var i = 0; i < 4; i++){
+    setTimeout(function(){ spawn(true); }, i * 300);
   }
-  // Потом каждые 2 секунды
-  setInterval(spawn, 2000);
+  // Потом обычные каждые 1.5 сек
+  setTimeout(function(){
+    setInterval(function(){ spawn(false); }, 1500);
+  }, 1200);
 })();
 
 // Countdown
