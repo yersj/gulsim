@@ -655,11 +655,36 @@ footer{background:var(--brown);padding:48px 24px;text-align:center}
   setInterval(tick,1000);
 })();
 
-// RSVP
-document.getElementById('rsvpForm').addEventListener('submit',function(e){
+// RSVP → Google Sheets
+var SHEET_URL = 'https://script.google.com/macros/s/AKfycbwJFYzYqoKTERZkD-BL7q34o-K_f7-F36HpGSFBuOtqY6ZcKf_qA1AsfsMLIDnZDIj4/exec';
+
+document.getElementById('rsvpForm').addEventListener('submit', function(e) {
   e.preventDefault();
-  this.style.display='none';
-  document.getElementById('rsvpThanks').style.display='block';
+  var form = this;
+  var name = form.querySelector('.rsvp-input').value.trim();
+  var att  = form.querySelector('input[name="att"]:checked');
+  if (!att) return;
+
+  var labels = { alone: 'ҚАТЫСАМЫН', spouse: 'ЖҰБАЙЫММЕН БАРАМЫН', no: 'КЕЛЕ АЛМАЙМЫН' };
+
+  var btn = form.querySelector('.rsvp-btn');
+  btn.textContent = '...';
+  btn.disabled = true;
+
+  fetch(SHEET_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: name, attendance: labels[att.value] })
+  })
+  .then(function() {
+    form.style.display = 'none';
+    document.getElementById('rsvpThanks').style.display = 'block';
+  })
+  .catch(function() {
+    form.style.display = 'none';
+    document.getElementById('rsvpThanks').style.display = 'block';
+  });
 });
 
 // Music player
