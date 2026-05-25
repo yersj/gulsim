@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Гүлсім — Қыз Ұзату</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#f7f2eb;
+  --surface:#faf7f3;
+  --brown:#2b1a12;
+  --brown-md:#5a3826;
+  --gold:#c4a07a;
+  --pearl:#ddd4c8;
+  --silk:#ede4d9;
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  background:var(--bg);
+  font-family:'Cormorant Garamond',Georgia,serif;
+  color:var(--brown);
+  overflow-x:hidden;
+}
+
+/* ── HERO ── */
+.hero{
+  position:relative;
+  min-height:100svh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:80px 32px 100px;
+  overflow:hidden;
+}
+
+.hero-bg{
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 15% 50%,rgba(255,255,255,.55) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 80% at 85% 50%,rgba(255,255,255,.35) 0%,transparent 60%),
+    radial-gradient(ellipse 100% 40% at 50% 0%,rgba(255,248,240,.8) 0%,transparent 50%),
+    linear-gradient(155deg,#faf5ef 0%,#ede5db 40%,#f5ede4 70%,#e8ddd4 100%);
+  z-index:0;
+}
+.hero-bg::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:repeating-linear-gradient(108deg,transparent,transparent 6px,rgba(255,255,255,.06) 6px,rgba(255,255,255,.06) 7px);
+}
+
+/* Roses */
+.rose{
+  position:absolute;
+  z-index:1;
+  pointer-events:none;
+}
+.rose-tl{top:-70px;left:-70px;width:260px;animation:floatA 7s ease-in-out infinite}
+.rose-br{bottom:-70px;right:-70px;width:240px;animation:floatA 7s ease-in-out infinite 3.5s;transform:rotate(180deg)}
+.rose-tr{top:-50px;right:-50px;width:200px;animation:floatB 8s ease-in-out infinite 1.5s;transform:scaleX(-1)}
+
+@keyframes floatA{0%,100%{transform:rotate(180deg) translateY(0)}50%{transform:rotate(180deg) translateY(-10px)}}
+@keyframes floatB{0%,100%{transform:scaleX(-1) translateY(0)}50%{transform:scaleX(-1) translateY(-10px)}}
+
+/* Hero content */
+.hero-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center}
+
+.hero-tag{
+  font-family:'Montserrat',sans-serif;
+  font-size:10px;letter-spacing:5px;
+  color:var(--brown-md);opacity:.6;
+  margin-bottom:14px;
+}
+
+.hero-name{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;font-weight:300;
+  font-size:clamp(88px,24vw,155px);
+  color:var(--brown);
+  line-height:.9;
+  text-shadow:0 4px 30px rgba(196,160,122,.25);
+  margin-bottom:18px;
+}
+
+.pearls{display:flex;align-items:center;gap:7px;margin-bottom:18px}
+.p{border-radius:50%;background:radial-gradient(circle at 38% 35%,#fff,#cfc8be);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.p-s{width:8px;height:8px}
+.p-m{width:11px;height:11px}
+.p-l{width:15px;height:15px}
+
+.hero-event{
+  font-family:'Montserrat',sans-serif;
+  font-size:clamp(11px,3vw,14px);
+  font-weight:300;letter-spacing:7px;
+  color:var(--brown-md);
+  margin-bottom:18px;
+}
+
+.gold-line{width:80px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 18px}
+
+.hero-date{
+  font-size:clamp(18px,5vw,26px);
+  font-weight:300;letter-spacing:10px;
+  color:var(--brown);
+}
+
+.scroll-hint{
+  position:absolute;bottom:28px;left:50%;transform:translateX(-50%);
+  z-index:2;opacity:.3;animation:bob 2.4s ease-in-out infinite;
+}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+
+/* ── CALENDAR ── */
+.cal-section{
+  background:var(--surface);
+  border-bottom:1px solid var(--pearl);
+  padding:52px 24px 44px;
+  text-align:center;
+}
+
+.sec-label{
+  font-family:'Montserrat',sans-serif;
+  font-size:9px;letter-spacing:4px;
+  color:var(--gold);margin-bottom:24px;
+}
+
+.cal{border-collapse:collapse;margin:0 auto;font-family:'Montserrat',sans-serif}
+.cal th{font-size:9px;letter-spacing:1px;color:var(--pearl);font-weight:400;padding:0 10px 12px}
+.cal td{font-size:13px;font-weight:300;color:var(--brown-md);padding:6px 10px;text-align:center;line-height:1}
+.cal td.hi{
+  background:var(--brown);color:#fff;
+  border-radius:50%;
+  width:28px;height:28px;
+  padding:0;line-height:28px;
+  font-weight:500;
+}
+.cal td.dim{color:var(--pearl)}
+
+/* ── INVITE CARD ── */
+.invite{
+  background:#fff;
+  padding:64px 32px;
+  text-align:center;
+  position:relative;
+}
+.invite::before,.invite::after{
+  content:'';display:block;
+  width:40px;height:1px;
+  background:var(--pearl);
+  margin:0 auto;
+}
+.invite::before{margin-bottom:40px}
+.invite::after{margin-top:40px}
+
+.i-greeting{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:42px;color:var(--brown);margin-bottom:18px}
+.i-body{font-size:17px;font-weight:300;line-height:2;color:var(--brown-md);font-style:italic}
+.i-bride{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:clamp(52px,14vw,78px);color:var(--brown);line-height:1.05;margin:6px 0}
+
+.i-sep{
+  display:flex;align-items:center;gap:14px;
+  margin:28px auto;max-width:260px;
+}
+.i-sep::before,.i-sep::after{content:'';flex:1;height:1px;background:var(--pearl)}
+
+.hosts-lbl{font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:3px;color:var(--gold);margin-bottom:8px}
+.hosts-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:36px;color:var(--brown)}
+
+.evt-info{
+  margin-top:28px;
+  font-family:'Montserrat',sans-serif;
+  font-size:10px;letter-spacing:3px;
+  line-height:2.4;color:var(--brown-md);
+}
+
+/* ── COUNTDOWN ── */
+.cd{
+  background:var(--brown);
+  padding:72px 24px;
+  text-align:center;
+  width:100%;
+}
+.cd-title{font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:4px;color:var(--gold);opacity:.75;margin-bottom:40px}
+
+.cd-grid{display:flex;justify-content:center;max-width:340px;margin:0 auto}
+.cd-item{
+  flex:1;display:flex;flex-direction:column;
+  align-items:center;gap:10px;
+  border-right:1px solid rgba(255,255,255,.08);
+}
+.cd-item:last-child{border-right:none}
+
+.cd-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(40px,11vw,62px);
+  font-weight:300;color:#fff;line-height:1;
+}
+.cd-lbl{font-family:'Montserrat',sans-serif;font-size:8px;letter-spacing:2px;color:var(--gold);opacity:.7}
+
+/* ── VENUE ── */
+.venue{padding:80px 24px;text-align:center;background:var(--bg)}
+
+.arch{
+  max-width:290px;
+  margin:0 auto;
+  background:#fff;
+  border-radius:145px 145px 0 0;
+  padding:52px 32px 44px;
+  box-shadow:0 8px 48px rgba(44,26,18,.09);
+  position:relative;
+}
+.arch::before{
+  content:'';
+  position:absolute;
+  top:10px;left:10px;right:10px;
+  height:55%;
+  border:1px solid var(--pearl);
+  border-radius:130px 130px 0 0;
+  border-bottom:none;
+  pointer-events:none;
+}
+
+.venue-lbl{font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:3px;color:var(--gold);margin-bottom:12px}
+.venue-name{font-family:'Cormorant Garamond',serif;font-size:30px;font-style:italic;color:var(--brown);margin-bottom:10px}
+.venue-addr{font-size:14px;font-weight:300;font-style:italic;color:var(--brown-md);line-height:1.8;margin-bottom:24px}
+
+.map-btn{
+  display:inline-block;padding:11px 28px;
+  border:1px solid var(--brown);
+  font-family:'Montserrat',sans-serif;
+  font-size:9px;letter-spacing:3px;
+  color:var(--brown);text-decoration:none;
+  transition:background .25s,color .25s;
+}
+.map-btn:hover{background:var(--brown);color:#fff}
+
+/* ── RSVP ── */
+.rsvp{background:var(--silk);padding:80px 24px 90px;text-align:center}
+
+.rsvp-heading{
+  font-size:15px;font-style:italic;font-weight:300;
+  letter-spacing:3px;color:var(--brown);
+  margin-bottom:36px;
+}
+
+.rsvp-form{max-width:340px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+
+.rsvp-input{
+  width:100%;border:none;border-bottom:1px solid var(--pearl);
+  background:transparent;
+  padding:12px 4px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:18px;color:var(--brown);outline:none;
+  transition:border-color .2s;
+}
+.rsvp-input:focus{border-bottom-color:var(--gold)}
+.rsvp-input::placeholder{color:var(--pearl);font-style:italic}
+
+.rsvp-hint{
+  font-size:12px;font-style:italic;
+  color:var(--brown-md);opacity:.55;
+  line-height:1.7;text-align:left;
+}
+
+.rsvp-opts{display:flex;flex-direction:column;gap:14px;margin-top:4px}
+
+.r-label{display:flex;align-items:center;gap:14px;cursor:pointer;text-align:left}
+.r-label input{display:none}
+
+.r-circle{
+  width:18px;height:18px;
+  border:1px solid var(--pearl);
+  border-radius:50%;flex-shrink:0;
+  transition:all .2s;position:relative;
+}
+.r-label input:checked~.r-circle{border-color:var(--brown);background:var(--brown)}
+.r-label input:checked~.r-circle::after{
+  content:'';position:absolute;inset:4px;
+  border-radius:50%;background:#fff;
+}
+
+.r-text{
+  font-family:'Montserrat',sans-serif;
+  font-size:10px;letter-spacing:1.5px;
+  color:var(--brown-md);
+}
+
+.rsvp-btn{
+  margin-top:8px;background:var(--brown);color:#fff;border:none;
+  padding:16px;width:100%;
+  font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:22px;
+  letter-spacing:2px;cursor:pointer;transition:background .25s;
+}
+.rsvp-btn:hover{background:var(--brown-md)}
+
+.rsvp-thanks{
+  display:none;
+  font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
+  font-size:38px;color:var(--brown);
+  padding:48px 0;line-height:1.6;
+}
+
+/* ── FOOTER ── */
+footer{background:var(--brown);padding:48px 24px;text-align:center}
+.f-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:52px;color:rgba(255,255,255,.8);display:block;margin-bottom:10px}
+.f-date{font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:5px;color:var(--gold);opacity:.6}
+
+/* ── MUSIC PLAYER ── */
+.music-bar{
+  position:fixed;bottom:24px;right:24px;z-index:9999;
+  display:flex;align-items:center;gap:12px;
+  background:rgba(43,26,18,.92);
+  backdrop-filter:blur(10px);
+  padding:14px 20px;border-radius:50px;
+  box-shadow:0 6px 30px rgba(0,0,0,.35);
+  cursor:pointer;
+}
+.music-bar button{
+  width:36px;height:36px;border:none;cursor:pointer;
+  background:var(--gold);color:#fff;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  padding:0;flex-shrink:0;
+  animation:pulse 2s ease-in-out infinite;
+}
+.music-bar.playing button{animation:none}
+.music-bar button svg{width:16px;height:16px}
+.music-note{
+  font-family:'Montserrat',sans-serif;
+  font-size:10px;letter-spacing:2px;color:var(--gold);
+  white-space:nowrap;
+}
+@keyframes pulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(196,160,122,.5)}
+  50%{box-shadow:0 0 0 8px rgba(196,160,122,0)}
+}
+
+/* ── BASE RESPONSIVE FIXES ── */
+.i-greeting{font-size:clamp(28px,8vw,42px)}
+.hosts-name{font-size:clamp(24px,7vw,36px)}
+.rsvp-heading{font-size:clamp(13px,4vw,15px)}
+
+/* ── MOBILE ── */
+@media(max-width:600px){
+  /* Hero */
+  .hero{padding:70px 20px 90px}
+  .rose-tl{width:180px;top:-50px;left:-50px}
+  .rose-br{width:160px;bottom:-50px;right:-50px}
+  .rose-tr{width:130px;top:-35px;right:-35px}
+  .hero-tag{letter-spacing:3px;font-size:9px}
+  .hero-date{letter-spacing:6px}
+
+  /* Calendar */
+  .cal-section{padding:40px 16px 36px}
+  .cal th{padding:0 5px 10px;font-size:8px;letter-spacing:0}
+  .cal td{padding:5px 5px;font-size:12px}
+  .cal td.hi{width:26px;height:26px;line-height:26px}
+
+  /* Invite */
+  .invite{padding:44px 20px}
+  .invite::before{margin-bottom:28px}
+  .invite::after{margin-top:28px}
+  .i-body{font-size:16px;line-height:1.9}
+  .evt-info{font-size:9px;letter-spacing:2px}
+
+  /* Countdown */
+  .cd{padding:52px 16px}
+  .cd-title{font-size:8px;letter-spacing:3px;margin-bottom:32px}
+  .cd-lbl{font-size:7px;letter-spacing:1px}
+
+  /* Venue */
+  .venue{padding:56px 20px}
+  .arch{
+    max-width:100%;
+    width:calc(100% - 40px);
+    border-radius:clamp(80px,40vw,145px) clamp(80px,40vw,145px) 0 0;
+    padding:44px 28px 40px;
+  }
+  .arch::before{
+    border-radius:calc(clamp(80px,40vw,145px) - 10px) calc(clamp(80px,40vw,145px) - 10px) 0 0;
+  }
+  .venue-name{font-size:26px}
+  .map-btn{display:block;width:100%;text-align:center;padding:14px}
+
+  /* RSVP */
+  .rsvp{padding:52px 20px 72px}
+  .rsvp-form{max-width:100%}
+  .rsvp-input{font-size:17px;padding:14px 4px}
+  .r-text{font-size:10px;letter-spacing:1px}
+  .r-circle{width:22px;height:22px;flex-shrink:0}
+  .rsvp-btn{padding:18px;font-size:20px}
+
+  /* Footer */
+  footer{padding:40px 20px}
+  .f-name{font-size:44px}
+
+  /* Music */
+  .music-bar{bottom:16px;right:16px;padding:11px 14px;gap:10px}
+  .music-bar button{width:32px;height:32px}
+  .music-note{font-size:9px}
+}
+
+/* Very small phones */
+@media(max-width:360px){
+  .hero-name{font-size:clamp(72px,21vw,90px)}
+  .cal th{padding:0 3px 8px;font-size:7px}
+  .cal td{padding:4px 3px;font-size:11px}
+  .arch{padding:38px 20px 32px}
+  .rsvp{padding:44px 16px 64px}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+
+  <!-- Rose top-left -->
+  <svg class="rose rose-tl" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+    <g opacity=".9">
+      <!-- outer petals -->
+      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(0,140,140)"/>
+      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#f9f4ef" transform="rotate(51.4,140,140)"/>
+      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(102.9,140,140)"/>
+      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#f9f4ef" transform="rotate(154.3,140,140)"/>
+      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(205.7,140,140)"/>
+      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#f9f4ef" transform="rotate(257.1,140,140)"/>
+      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(308.6,140,140)"/>
+      <!-- middle petals -->
+      <path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#f2e8de" transform="rotate(25.7,140,140)"/>
+      <path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#ede3d8" transform="rotate(85.7,140,140)"/>
+      <path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#f2e8de" transform="rotate(145.7,140,140)"/>
+      <path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#ede3d8" transform="rotate(205.7,140,140)"/>
+      <path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#f2e8de" transform="rotate(265.7,140,140)"/>
+      <path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#ede3d8" transform="rotate(325.7,140,140)"/>
+      <!-- inner petals -->
+      <path d="M140,140 C122,124 116,100 140,82 C164,100 158,124 140,140Z" fill="#e5d8cc" transform="rotate(13,140,140)"/>
+      <path d="M140,140 C122,124 116,100 140,82 C164,100 158,124 140,140Z" fill="#dfd1c4" transform="rotate(85,140,140)"/>
+      <path d="M140,140 C122,124 116,100 140,82 C164,100 158,124 140,140Z" fill="#e5d8cc" transform="rotate(157,140,140)"/>
+      <path d="M140,140 C122,124 116,100 140,82 C164,100 158,124 140,140Z" fill="#dfd1c4" transform="rotate(229,140,140)"/>
+      <path d="M140,140 C122,124 116,100 140,82 C164,100 158,124 140,140Z" fill="#e5d8cc" transform="rotate(301,140,140)"/>
+      <!-- center -->
+      <circle cx="140" cy="140" r="24" fill="#d8c9ba"/>
+      <circle cx="140" cy="140" r="16" fill="#ccb9a8"/>
+      <circle cx="140" cy="140" r="9" fill="#c4ae9d"/>
+    </g>
+    <!-- leaves -->
+    <ellipse cx="200" cy="210" rx="32" ry="10" fill="#9eb89a" opacity=".6" transform="rotate(-35,200,210)"/>
+    <ellipse cx="215" cy="195" rx="26" ry="8" fill="#8aaa86" opacity=".5" transform="rotate(-20,215,195)"/>
+  </svg>
+
+  <!-- Rose bottom-right -->
+  <svg class="rose rose-br" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+    <g opacity=".85">
+      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(0,140,140)"/>
+      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#f9f4ef" transform="rotate(51.4,140,140)"/>
+      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(102.9,140,140)"/>
+      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#f9f4ef" transform="rotate(154.3,140,140)"/>
+      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(205.7,140,140)"/>
+      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#f9f4ef" transform="rotate(257.1,140,140)"/>
+      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(308.6,140,140)"/>
+      <path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#f2e8de" transform="rotate(25.7,140,140)"/>
+      <path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#ede3d8" transform="rotate(85.7,140,140)"/>
+      <path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#f2e8de" transform="rotate(145.7,140,140)"/>
+      <path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#ede3d8" transform="rotate(205.7,140,140)"/>
+      <path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#f2e8de" transform="rotate(265.7,140,140)"/>
+      <path d="M140,140 C122,124 116,100 140,82 C164,100 158,124 140,140Z" fill="#e5d8cc" transform="rotate(13,140,140)"/>
+      <path d="M140,140 C122,124 116,100 140,82 C164,100 158,124 140,140Z" fill="#e5d8cc" transform="rotate(157,140,140)"/>
+      <path d="M140,140 C122,124 116,100 140,82 C164,100 158,124 140,140Z" fill="#e5d8cc" transform="rotate(301,140,140)"/>
+      <circle cx="140" cy="140" r="24" fill="#d8c9ba"/>
+      <circle cx="140" cy="140" r="16" fill="#ccb9a8"/>
+      <circle cx="140" cy="140" r="9" fill="#c4ae9d"/>
+    </g>
+    <ellipse cx="80" cy="70" rx="30" ry="9" fill="#9eb89a" opacity=".6" transform="rotate(-35,80,70)"/>
+    <ellipse cx="65" cy="85" rx="24" ry="8" fill="#8aaa86" opacity=".5" transform="rotate(-20,65,85)"/>
+  </svg>
+
+  <!-- Rose top-right -->
+  <svg class="rose rose-tr" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+    <g opacity=".75">
+      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(0,140,140)"/>
+      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#f9f4ef" transform="rotate(72,140,140)"/>
+      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(144,140,140)"/>
+      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#f9f4ef" transform="rotate(216,140,140)"/>
+      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(288,140,140)"/>
+      <path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#f2e8de" transform="rotate(36,140,140)"/>
+      <path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#ede3d8" transform="rotate(108,140,140)"/>
+      <path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#f2e8de" transform="rotate(180,140,140)"/>
+      <path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#ede3d8" transform="rotate(252,140,140)"/>
+      <path d="M140,140 C122,124 116,100 140,82 C164,100 158,124 140,140Z" fill="#e5d8cc" transform="rotate(54,140,140)"/>
+      <path d="M140,140 C122,124 116,100 140,82 C164,100 158,124 140,140Z" fill="#e5d8cc" transform="rotate(180,140,140)"/>
+      <circle cx="140" cy="140" r="22" fill="#d8c9ba"/>
+      <circle cx="140" cy="140" r="14" fill="#ccb9a8"/>
+    </g>
+  </svg>
+
+  <div class="hero-inner">
+    <div class="hero-tag">— ҚЫЗ ҰЗАТУ —</div>
+    <h1 class="hero-name">Гүлсім</h1>
+    <div class="pearls">
+      <div class="p p-s"></div>
+      <div class="p p-m"></div>
+      <div class="p p-l"></div>
+      <div class="p p-m"></div>
+      <div class="p p-s"></div>
+    </div>
+    <div class="hero-event">QYZ UZATU</div>
+    <div class="gold-line"></div>
+    <div class="hero-date">24 &thinsp;|&thinsp; 08 &thinsp;|&thinsp; 2026</div>
+  </div>
+
+  <div class="scroll-hint">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5a3826" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9"/>
+    </svg>
+  </div>
+</section>
+
+<!-- CALENDAR -->
+<div class="cal-section">
+  <div class="sec-label">ТАМЫЗ 2026</div>
+  <table class="cal">
+    <thead>
+      <tr><th>ДС</th><th>СС</th><th>СР</th><th>БС</th><th>ЖМ</th><th>СБ</th><th>ЖС</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="dim"></td><td class="dim"></td><td class="dim"></td><td class="dim"></td><td class="dim"></td><td>1</td><td>2</td></tr>
+      <tr><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td></tr>
+      <tr><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td><td>16</td></tr>
+      <tr><td>17</td><td>18</td><td>19</td><td>20</td><td>21</td><td>22</td><td>23</td></tr>
+      <tr><td class="hi">24</td><td>25</td><td>26</td><td>27</td><td>28</td><td>29</td><td>30</td></tr>
+      <tr><td>31</td><td class="dim"></td><td class="dim"></td><td class="dim"></td><td class="dim"></td><td class="dim"></td><td class="dim"></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- INVITE TEXT -->
+<div class="invite">
+  <div class="i-greeting">Құрметті қонақтар!</div>
+  <p class="i-body">Сіздерді аяулы</p>
+  <div class="i-bride">Гүлсім</div>
+  <p class="i-body">қызымыздың ұзату тойына арналған<br>салтанатты ас дастарханымыздың<br>қадірлі қонағы болуға шақырамыз!</p>
+
+  <div class="i-sep">
+    <div class="p p-s"></div>
+    <div class="p p-m"></div>
+    <div class="p p-l"></div>
+    <div class="p p-m"></div>
+    <div class="p p-s"></div>
+  </div>
+
+  <div class="hosts-lbl">ТОЙ ИЕЛЕРІ</div>
+  <div class="hosts-name">Түркия әулеті</div>
+
+  <div class="evt-info">
+    <div>ТОЙ САЛТАНАТЫ</div>
+    <div><strong>24 ТАМЫЗ 2026 ЖЫЛЫ</strong></div>
+    <div>САҒАТ 16:00</div>
+  </div>
+</div>
+
+<!-- COUNTDOWN -->
+<div class="cd">
+  <div class="cd-title">ТОЙ САЛТАНАТЫНА ДЕЙІН</div>
+  <div class="cd-grid">
+    <div class="cd-item"><span class="cd-num" id="cd-d">00</span><span class="cd-lbl">КҮН</span></div>
+    <div class="cd-item"><span class="cd-num" id="cd-h">00</span><span class="cd-lbl">САҒАТ</span></div>
+    <div class="cd-item"><span class="cd-num" id="cd-m">00</span><span class="cd-lbl">МИНУТ</span></div>
+    <div class="cd-item"><span class="cd-num" id="cd-s">00</span><span class="cd-lbl">СЕКУНД</span></div>
+  </div>
+</div>
+
+<!-- VENUE -->
+<div class="venue">
+  <div class="sec-label">МЕКЕНЖАЙЫ</div>
+  <div class="arch">
+    <div class="venue-lbl">МЕЙРАМХАНА</div>
+    <div class="venue-name">Baq Sarai</div>
+    <div class="venue-addr">Алматы қаласы</div>
+    <a href="https://2gis.kz/almaty/geo/70000001036418976" target="_blank" class="map-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>2GIS-ТЕ АШУ
+    </a>
+  </div>
+  <div class="pearls" style="justify-content:center;margin-top:36px">
+    <div class="p p-s"></div>
+    <div class="p p-m"></div>
+    <div class="p p-l"></div>
+    <div class="p p-m"></div>
+    <div class="p p-s"></div>
+  </div>
+</div>
+
+<!-- RSVP -->
+<div class="rsvp">
+  <div class="sec-label">РАСТАУ</div>
+  <div class="rsvp-heading">Аты-жөніңіз:</div>
+  <form class="rsvp-form" id="rsvpForm">
+    <input class="rsvp-input" type="text" placeholder="Есіміңіз" required>
+    <div class="rsvp-hint">Жұбайыңызбен келетін болсаңыз, екеуіңіздің де есімдеріңізді жазуыңызды сұраймыз</div>
+    <div class="rsvp-opts">
+      <label class="r-label"><input type="radio" name="att" value="alone" required><div class="r-circle"></div><span class="r-text">ҚАТЫСАМЫН</span></label>
+      <label class="r-label"><input type="radio" name="att" value="spouse"><div class="r-circle"></div><span class="r-text">ЖҰБАЙЫММЕН БАРАМЫН</span></label>
+      <label class="r-label"><input type="radio" name="att" value="no"><div class="r-circle"></div><span class="r-text">ӨКІНІШКЕ ҚАРАЙ, КЕЛЕ АЛМАЙМЫН</span></label>
+    </div>
+    <button type="submit" class="rsvp-btn">Жіберу</button>
+  </form>
+  <div class="rsvp-thanks" id="rsvpThanks">Рахмет!<br>Жауабыңыз қабылданды ✨</div>
+</div>
+
+<!-- MUSIC PLAYER -->
+<audio id="bgAudio" loop preload="none">
+  <source src="track.m4a" type="audio/mp4">
+</audio>
+<div class="music-bar">
+  <button id="playBtn" title="Музыка">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+  </button>
+  <span class="music-note">МУЗЫКА</span>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span class="f-name">Гүлсім</span>
+  <span class="f-date">24 · 08 · 2026</span>
+</footer>
+
+<script>
+// Countdown
+(function(){
+  var target = new Date('2026-08-24T16:00:00').getTime();
+  function pad(n){return String(n).padStart(2,'0')}
+  function tick(){
+    var diff = target - Date.now();
+    if(diff<=0){diff=0}
+    var d=Math.floor(diff/86400000);
+    var h=Math.floor((diff%86400000)/3600000);
+    var m=Math.floor((diff%3600000)/60000);
+    var s=Math.floor((diff%60000)/1000);
+    document.getElementById('cd-d').textContent=pad(d);
+    document.getElementById('cd-h').textContent=pad(h);
+    document.getElementById('cd-m').textContent=pad(m);
+    document.getElementById('cd-s').textContent=pad(s);
+  }
+  tick();
+  setInterval(tick,1000);
+})();
+
+// RSVP
+document.getElementById('rsvpForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  this.style.display='none';
+  document.getElementById('rsvpThanks').style.display='block';
+});
+
+// Music player
+var audio = document.getElementById('bgAudio');
+var playBtn = document.getElementById('playBtn');
+var musicBar = document.querySelector('.music-bar');
+var isPlaying = false;
+
+var iconPlay  = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+var iconPause = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+
+audio.volume = 0.45;
+
+function startPlay(){
+  audio.play().then(function(){
+    isPlaying = true;
+    playBtn.innerHTML = iconPause;
+    musicBar.classList.add('playing');
+  }).catch(function(e){ console.log('audio error:', e); });
+}
+
+function stopPlay(){
+  audio.pause();
+  isPlaying = false;
+  playBtn.innerHTML = iconPlay;
+  musicBar.classList.remove('playing');
+}
+
+playBtn.addEventListener('click', function(e){
+  e.stopPropagation();
+  isPlaying ? stopPlay() : startPlay();
+});
+</script>
+</body>
+</html>
