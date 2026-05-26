@@ -375,73 +375,7 @@ footer::before{content:'';position:absolute;inset:0;background:linear-gradient(1
   0%{left:-60%}60%{left:120%}100%{left:120%}
 }
 
-/* ── INTRO SPLASH ── */
-.intro{
-  position:fixed;inset:0;z-index:99999;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;cursor:pointer;user-select:none;
-  background:linear-gradient(160deg,#fdf8f2 0%,#f0e6da 35%,#f7ede3 65%,#e9ddd3 100%);
-  transition:opacity 1.1s ease,transform 1.1s ease;
-  overflow:hidden;
-}
-.intro.hide{opacity:0;transform:scale(1.05);pointer-events:none}
-
-/* Розы по углам */
-.intro-rose{position:absolute;pointer-events:none}
-.intro-rose-tl{top:-50px;left:-50px;width:260px;opacity:.75;animation:floatA 7s ease-in-out infinite}
-.intro-rose-br{bottom:-50px;right:-50px;width:240px;opacity:.7;transform:rotate(180deg);animation:floatA 7s ease-in-out infinite 3.5s}
-.intro-rose-tr{top:-40px;right:-40px;width:190px;opacity:.5;transform:scaleX(-1);animation:floatB 8s ease-in-out infinite 1.5s}
-.intro-rose-bl{bottom:-40px;left:-40px;width:170px;opacity:.45;transform:rotate(90deg);animation:floatB 8s ease-in-out infinite 5s}
-
-/* Анимации появления */
 @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes shimmer{0%,100%{opacity:.5}50%{opacity:1}}
-
-.intro-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center}
-
-.intro-tag{
-  font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:6px;
-  color:var(--brown-md);opacity:0;margin-bottom:18px;
-  animation:fadeUp .8s ease forwards .3s;
-}
-.intro-name{
-  font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
-  font-size:clamp(86px,24vw,150px);color:var(--brown);line-height:.88;
-  text-shadow:0 6px 40px rgba(196,160,122,.35);
-  opacity:0;margin-bottom:22px;
-  animation:fadeUp 1s ease forwards .6s;
-}
-.intro-pearls{
-  display:flex;align-items:center;gap:7px;
-  opacity:0;margin-bottom:18px;
-  animation:fadeIn .8s ease forwards 1.1s;
-}
-.intro-gold-line{
-  width:60px;height:1px;
-  background:linear-gradient(90deg,transparent,var(--gold),transparent);
-  opacity:0;margin-bottom:16px;
-  animation:fadeIn .8s ease forwards 1.3s;
-}
-.intro-date{
-  font-family:'Montserrat',sans-serif;font-size:clamp(11px,3vw,13px);
-  letter-spacing:7px;color:var(--brown-md);
-  opacity:0;margin-bottom:52px;
-  animation:fadeUp .8s ease forwards 1.1s;
-}
-.intro-hint{
-  display:flex;flex-direction:column;align-items:center;gap:6px;
-  opacity:0;animation:fadeIn 1s ease forwards 1.8s;
-}
-.intro-hint-text{
-  font-family:'Montserrat',sans-serif;font-size:8px;letter-spacing:4px;
-  color:var(--brown-md);opacity:.45;margin-bottom:4px;
-}
-.intro-hint-line{
-  width:1px;height:44px;
-  background:linear-gradient(to bottom,var(--gold),transparent);
-  animation:shimmer 2s ease-in-out infinite;
-}
 
 /* ── MUSIC PLAYER ── */
 .music-bar{
@@ -642,8 +576,8 @@ footer::before{content:'';position:absolute;inset:0;background:linear-gradient(1
 </head>
 <body>
 
-<!-- INTRO SPLASH -->
-<div class="intro" id="intro">
+<!-- INTRO REMOVED -->
+<div class="intro" id="intro" style="display:none">
   <!-- Розы по углам -->
   <svg class="intro-rose intro-rose-tl" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg"><g opacity=".9"><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(0,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#f9f4ef" transform="rotate(51.4,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(102.9,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#f9f4ef" transform="rotate(154.3,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(205.7,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#f9f4ef" transform="rotate(257.1,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(308.6,140,140)"/><path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#f2e8de" transform="rotate(25.7,140,140)"/><path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#ede3d8" transform="rotate(85.7,140,140)"/><path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#f2e8de" transform="rotate(145.7,140,140)"/><path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#ede3d8" transform="rotate(205.7,140,140)"/><path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#f2e8de" transform="rotate(265.7,140,140)"/><circle cx="140" cy="140" r="24" fill="#d8c9ba"/><circle cx="140" cy="140" r="16" fill="#ccb9a8"/><circle cx="140" cy="140" r="9" fill="#c4ae9d"/></g></svg>
   <svg class="intro-rose intro-rose-br" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg"><g opacity=".85"><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(0,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#f9f4ef" transform="rotate(51.4,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(102.9,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#f9f4ef" transform="rotate(154.3,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(205.7,140,140)"/><path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#f2e8de" transform="rotate(25.7,140,140)"/><path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#ede3d8" transform="rotate(85.7,140,140)"/><circle cx="140" cy="140" r="24" fill="#d8c9ba"/><circle cx="140" cy="140" r="16" fill="#ccb9a8"/><circle cx="140" cy="140" r="9" fill="#c4ae9d"/></g></svg>
@@ -982,60 +916,9 @@ function startMusic(){
   }
 }
 
-function unmuteTap(){
-  if(audio.muted){
-    audio.muted = false;
-    var hint = document.getElementById('soundHint');
-    if(hint){ hint.style.opacity='0'; setTimeout(function(){ hint.remove(); },500); }
-  } else {
-    startMusic();
-  }
-}
-
-// Muted autoplay — сразу при загрузке
-audio.muted = true;
-audio.play().then(function(){
-  started = true;
-  setPlaying(true);
-  // Пробуем сразу включить звук (работает на Chrome/Android, не на iOS)
-  audio.muted = false;
-  // Если браузер не дал — показываем подсказку и ждём касания
-  setTimeout(function(){
-    if(audio.muted){
-      var hint = document.createElement('div');
-      hint.id = 'soundHint';
-      hint.style.cssText = 'position:fixed;bottom:80px;right:24px;z-index:10000;'+
-        'background:rgba(43,26,18,.88);color:#c4a07a;'+
-        'font-family:Montserrat,sans-serif;font-size:9px;letter-spacing:2px;'+
-        'padding:8px 16px;border-radius:20px;opacity:0;transition:opacity .6s;'+
-        'pointer-events:none;';
-      hint.textContent = 'ТАП — ДЫБЫС';
-      document.body.appendChild(hint);
-      setTimeout(function(){ hint.style.opacity='1'; }, 100);
-      document.addEventListener('touchstart', unmuteTap, {once:true, passive:true});
-      document.addEventListener('click',      unmuteTap, {once:true});
-    }
-  }, 300);
-}).catch(function(){
-  // Autoplay полностью заблокирован — ждём касания
-  document.addEventListener('touchstart', startMusic, {once:true, passive:true});
-  document.addEventListener('touchmove',  startMusic, {once:true, passive:true});
-  document.addEventListener('click',      startMusic, {once:true});
-});
-
-// Заставка — при касании закрывается
-var intro = document.getElementById('intro');
-if(intro){
-  function closeIntro(){
-    intro.classList.add('hide');
-    setTimeout(function(){ intro.style.display='none'; }, 1000);
-    if(window.startAutoScroll) window.startAutoScroll();
-  }
-  intro.addEventListener('touchstart', closeIntro, {once:true, passive:true});
-  intro.addEventListener('click', closeIntro, {once:true});
-  // Авто-закрытие через 4 сек
-  setTimeout(closeIntro, 4000);
-}
+// Музыка стартует при первом касании в любом месте
+document.addEventListener('touchstart', startMusic, {once:true, passive:true});
+document.addEventListener('click',      startMusic, {once:true});
 
 playBtn.addEventListener('click', function(e){
   e.stopPropagation();
@@ -1175,12 +1058,13 @@ document.getElementById('wishesForm').addEventListener('submit', function(e){
   window.addEventListener('wheel',      stopScroll, {passive:true});
   window.addEventListener('touchmove',  stopScroll, {passive:true});
 
-  // Запускаем когда заставка закрывается
   window.startAutoScroll = function(){
     if(stopped) return;
     raf = requestAnimationFrame(step);
   };
 })();
+
+setTimeout(function(){ if(window.startAutoScroll) window.startAutoScroll(); }, 300);
 </script>
 </body>
 </html>
