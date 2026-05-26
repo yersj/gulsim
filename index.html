@@ -973,28 +973,49 @@ function setPlaying(on){
 function startMusic(){
   if(started) return;
   started = true;
-  audio.play();
-  setPlaying(true);
+  var p = audio.play();
+  if(p && p.catch){
+    p.then(function(){ setPlaying(true); })
+     .catch(function(){ started = false; });
+  } else {
+    setPlaying(true);
+  }
 }
 
-// Автозапуск: muted трюк (десктоп)
+function unmuteTap(){
+  if(audio.muted){
+    audio.muted = false;
+    var hint = document.getElementById('soundHint');
+    if(hint){ hint.style.opacity='0'; setTimeout(function(){ hint.remove(); },500); }
+  } else {
+    startMusic();
+  }
+}
+
+// Muted autoplay — сразу при загрузке
 audio.muted = true;
 audio.play().then(function(){
-  audio.muted = false;
-  setPlaying(true);
   started = true;
-}).catch(function(){});
-
-// Первое взаимодействие — запуск (телефон + десктоп)
-function onFirstInteraction(){
-  startMusic();
-  document.removeEventListener('touchstart', onFirstInteraction);
-  document.removeEventListener('click', onFirstInteraction);
-  document.removeEventListener('keydown', onFirstInteraction);
-}
-document.addEventListener('touchstart', onFirstInteraction, {once:true, passive:true});
-document.addEventListener('click',      onFirstInteraction, {once:true});
-document.addEventListener('keydown',    onFirstInteraction, {once:true});
+  setPlaying(true);
+  // Подсказка "тап — звук"
+  var hint = document.createElement('div');
+  hint.id = 'soundHint';
+  hint.style.cssText = 'position:fixed;bottom:80px;right:24px;z-index:10000;'+
+    'background:rgba(43,26,18,.88);color:#c4a07a;'+
+    'font-family:Montserrat,sans-serif;font-size:9px;letter-spacing:2px;'+
+    'padding:8px 16px;border-radius:20px;opacity:0;transition:opacity .6s;'+
+    'pointer-events:none;';
+  hint.textContent = 'ТАП — ДЫБЫС';
+  document.body.appendChild(hint);
+  setTimeout(function(){ hint.style.opacity='1'; }, 800);
+  document.addEventListener('touchstart', unmuteTap, {once:true, passive:true});
+  document.addEventListener('click',      unmuteTap, {once:true});
+}).catch(function(){
+  // Autoplay заблокирован — ждём касания
+  document.addEventListener('touchstart', startMusic, {once:true, passive:true});
+  document.addEventListener('touchmove',  startMusic, {once:true, passive:true});
+  document.addEventListener('click',      startMusic, {once:true});
+});
 
 // Заставка — при касании закрывается
 var intro = document.getElementById('intro');
@@ -1002,6 +1023,7 @@ if(intro){
   function closeIntro(){
     intro.classList.add('hide');
     setTimeout(function(){ intro.style.display='none'; }, 1000);
+    if(window.startAutoScroll) window.startAutoScroll();
   }
   intro.addEventListener('touchstart', closeIntro, {once:true, passive:true});
   intro.addEventListener('click', closeIntro, {once:true});
@@ -1127,7 +1149,7 @@ document.getElementById('wishesForm').addEventListener('submit', function(e){
 
 // Slow auto-scroll
 (function(){
-  var speed = 0.4; // px per frame
+  var speed = 0.4;
   var raf = null;
   var stopped = false;
 
@@ -1136,24 +1158,22 @@ document.getElementById('wishesForm').addEventListener('submit', function(e){
     if(raf){ cancelAnimationFrame(raf); raf = null; }
   }
 
-  function startScroll(){
+  function step(){
     if(stopped) return;
-    raf = requestAnimationFrame(function step(){
-      if(stopped) return;
-      var atBottom = window.scrollY + window.innerHeight >= document.body.scrollHeight - 2;
-      if(atBottom){ return; }
-      window.scrollBy(0, speed);
-      raf = requestAnimationFrame(step);
-    });
+    if(window.scrollY + window.innerHeight >= document.body.scrollHeight - 2) return;
+    window.scrollBy(0, speed);
+    raf = requestAnimationFrame(step);
   }
 
-  // Stop on any user interaction
-  ['touchstart','wheel','mousedown','keydown'].forEach(function(ev){
-    window.addEventListener(ev, stopScroll, {passive:true});
-  });
+  // Останавливаем только при реальном скролле пользователя
+  window.addEventListener('wheel',      stopScroll, {passive:true});
+  window.addEventListener('touchmove',  stopScroll, {passive:true});
 
-  // Start after intro closes (4s) + small delay
-  setTimeout(startScroll, 4600);
+  // Запускаем когда заставка закрывается
+  window.startAutoScroll = function(){
+    if(stopped) return;
+    setTimeout(function(){ if(!stopped) raf = requestAnimationFrame(step); }, 700);
+  };
 })();
 </script>
 </body>
