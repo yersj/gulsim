@@ -965,7 +965,7 @@ function loadWishes(){
   fetch(WISHES_URL, {redirect:'follow'})
     .then(function(r){ return r.json(); })
     .then(function(list){
-      if(list && list.length){
+      if(list && Array.isArray(list)){
         saveLocal(list);
         renderWishes(list);
       }
