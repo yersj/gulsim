@@ -816,33 +816,35 @@ function setPlaying(on){
   on ? musicBar.classList.add('playing') : musicBar.classList.remove('playing');
 }
 
-// Заставка — тап запускает музыку и открывает сайт
+// Заставка
 var intro = document.getElementById('intro');
 var siteOpened = false;
 
-function openSite(){
+function closeIntro(){
   if(siteOpened) return;
   siteOpened = true;
   intro.classList.add('hide');
   setTimeout(function(){ intro.style.display='none'; }, 1000);
-  audio.pause();
-  audio.currentTime = 0;
+}
+
+// Тап по заставке — запускает музыку (с пользовательским жестом)
+function tapHandler(){
+  closeIntro();
   audio.muted = false;
-  // НЕ трогаем volume — на iOS это read-only, ставим сразу нормальный уровень
   audio.volume = 0.45;
   audio.play().then(function(){ setPlaying(true); }).catch(function(){});
 }
-intro.addEventListener('click', openSite);
-intro.addEventListener('touchend', function(e){ e.preventDefault(); openSite(); });
+intro.addEventListener('click', tapHandler);
+intro.addEventListener('touchend', function(e){ e.preventDefault(); tapHandler(); });
 
-// Десктоп: muted autoplay — заставка скрывается сама
+// Десктоп: muted autoplay без касания
 audio.muted = true;
 audio.volume = 0;
 audio.play().then(function(){
   audio.muted = false;
   setPlaying(true);
   fadeIn();
-  openSite();
+  closeIntro(); // закрываем заставку, НЕ трогая аудио повторно
 }).catch(function(){ /* мобильный — ждём тапа */ });
 
 playBtn.addEventListener('click', function(e){
