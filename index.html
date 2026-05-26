@@ -23,7 +23,7 @@
   --silk:#ede4d9;
 }
 
-html{scroll-behavior:smooth}
+html{scroll-behavior:auto}
 
 body{
   background:var(--bg);
@@ -1039,8 +1039,10 @@ document.getElementById('wishesForm').addEventListener('submit', function(e){
 // Slow auto-scroll
 (function(){
   var timer = null;
+  var stopped = false;
 
   function stopScroll(){
+    stopped = true;
     if(timer){ clearInterval(timer); timer = null; }
   }
 
@@ -1048,18 +1050,16 @@ document.getElementById('wishesForm').addEventListener('submit', function(e){
   window.addEventListener('touchmove', stopScroll, {passive:true});
 
   window.startAutoScroll = function(){
-    if(timer) return;
+    if(stopped || timer) return;
     timer = setInterval(function(){
-      var y   = window.pageYOffset;
-      var max = document.body.scrollHeight - window.innerHeight;
-      if(y >= max - 1){ clearInterval(timer); timer = null; return; }
-      window.scrollTo(0, y + 1);
-    }, 40);
+      if(stopped){ clearInterval(timer); timer = null; return; }
+      window.scrollBy(0, 1);
+    }, 30);
   };
 })();
 
 window.addEventListener('load', function(){
-  setTimeout(function(){ if(window.startAutoScroll) window.startAutoScroll(); }, 600);
+  setTimeout(function(){ if(window.startAutoScroll) window.startAutoScroll(); }, 1000);
 });
 </script>
 </body>
