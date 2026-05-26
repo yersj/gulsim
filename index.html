@@ -1053,8 +1053,8 @@ document.getElementById('wishesForm').addEventListener('submit', function(e){
     if(stopped || timer) return;
     timer = setInterval(function(){
       if(stopped){ clearInterval(timer); timer = null; return; }
-      window.scrollBy(0, 1);
-    }, 30);
+      window.scrollBy(0, 2);
+    }, 20);
   };
 })();
 
