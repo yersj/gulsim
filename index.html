@@ -1038,13 +1038,11 @@ document.getElementById('wishesForm').addEventListener('submit', function(e){
 
 // Slow auto-scroll
 (function(){
-  var speed = 0.5;
+  var speed = 0.8;
   var acc = 0;
   var raf = null;
   var stopped = false;
-
-  function getY(){ return window.pageYOffset || document.documentElement.scrollTop || 0; }
-  function getMax(){ return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight) - window.innerHeight; }
+  var el = document.scrollingElement || document.documentElement || document.body;
 
   function stopScroll(){
     stopped = true;
@@ -1053,12 +1051,11 @@ document.getElementById('wishesForm').addEventListener('submit', function(e){
 
   function step(){
     if(stopped) return;
-    if(getY() >= getMax() - 2) return;
+    if(el.scrollTop >= el.scrollHeight - el.clientHeight - 2) return;
     acc += speed;
     if(acc >= 1){
-      var px = Math.floor(acc);
-      window.scrollTo(0, getY() + px);
-      acc -= px;
+      el.scrollTop += Math.floor(acc);
+      acc -= Math.floor(acc);
     }
     raf = requestAnimationFrame(step);
   }
@@ -1073,9 +1070,8 @@ document.getElementById('wishesForm').addEventListener('submit', function(e){
   };
 })();
 
-// Ждём полной загрузки страницы потом запускаем скролл
 window.addEventListener('load', function(){
-  setTimeout(function(){ if(window.startAutoScroll) window.startAutoScroll(); }, 500);
+  setTimeout(function(){ if(window.startAutoScroll) window.startAutoScroll(); }, 600);
 });
 </script>
 </body>
