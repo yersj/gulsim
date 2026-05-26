@@ -1038,7 +1038,8 @@ document.getElementById('wishesForm').addEventListener('submit', function(e){
 
 // Slow auto-scroll
 (function(){
-  var speed = 0.4;
+  var speed = 0.5;
+  var acc = 0;
   var raf = null;
   var stopped = false;
 
@@ -1050,13 +1051,16 @@ document.getElementById('wishesForm').addEventListener('submit', function(e){
   function step(){
     if(stopped) return;
     if(window.scrollY + window.innerHeight >= document.body.scrollHeight - 2) return;
-    window.scrollBy(0, speed);
+    acc += speed;
+    if(acc >= 1){
+      window.scrollBy(0, Math.floor(acc));
+      acc -= Math.floor(acc);
+    }
     raf = requestAnimationFrame(step);
   }
 
-  // Останавливаем только при реальном скролле пользователя
-  window.addEventListener('wheel',      stopScroll, {passive:true});
-  window.addEventListener('touchmove',  stopScroll, {passive:true});
+  window.addEventListener('wheel',     stopScroll, {passive:true});
+  window.addEventListener('touchmove', stopScroll, {passive:true});
 
   window.startAutoScroll = function(){
     if(stopped) return;
