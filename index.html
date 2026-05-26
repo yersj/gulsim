@@ -131,13 +131,13 @@ body{
 
 .sec-label{
   font-family:'Montserrat',sans-serif;
-  font-size:9px;letter-spacing:4px;
+  font-size:11px;letter-spacing:4px;
   color:var(--gold);margin-bottom:24px;
 }
 
 .cal{border-collapse:collapse;margin:0 auto;font-family:'Montserrat',sans-serif}
-.cal th{font-size:9px;letter-spacing:1px;color:var(--pearl);font-weight:400;padding:0 10px 12px}
-.cal td{font-size:13px;font-weight:300;color:var(--brown-md);padding:6px 10px;text-align:center;line-height:1}
+.cal th{font-size:11px;letter-spacing:1px;color:var(--brown-md);font-weight:400;padding:0 12px 14px}
+.cal td{font-size:15px;font-weight:300;color:var(--brown-md);padding:7px 12px;text-align:center;line-height:1}
 .cal td.hi{
   background:var(--brown);color:#fff;
   border-radius:50%;
@@ -163,8 +163,8 @@ body{
 .invite::before{margin-bottom:40px}
 .invite::after{margin-top:40px}
 
-.i-greeting{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:42px;color:var(--brown);margin-bottom:18px}
-.i-body{font-size:17px;font-weight:300;line-height:2;color:var(--brown-md);font-style:italic}
+.i-greeting{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:clamp(32px,9vw,48px);color:var(--brown);margin-bottom:18px}
+.i-body{font-size:20px;font-weight:300;line-height:2;color:var(--brown-md);font-style:italic}
 .i-bride{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:clamp(52px,14vw,78px);color:var(--brown);line-height:1.05;margin:6px 0}
 
 .i-sep{
@@ -173,13 +173,13 @@ body{
 }
 .i-sep::before,.i-sep::after{content:'';flex:1;height:1px;background:var(--pearl)}
 
-.hosts-lbl{font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:3px;color:var(--gold);margin-bottom:8px}
-.hosts-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:36px;color:var(--brown)}
+.hosts-lbl{font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:3px;color:var(--gold);margin-bottom:8px}
+.hosts-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:clamp(28px,8vw,42px);color:var(--brown)}
 
 .evt-info{
   margin-top:28px;
   font-family:'Montserrat',sans-serif;
-  font-size:10px;letter-spacing:3px;
+  font-size:13px;letter-spacing:3px;
   line-height:2.4;color:var(--brown-md);
 }
 
@@ -190,7 +190,7 @@ body{
   text-align:center;
   width:100%;
 }
-.cd-title{font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:4px;color:var(--gold);opacity:.75;margin-bottom:40px}
+.cd-title{font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:4px;color:var(--gold);opacity:.9;margin-bottom:40px}
 
 .cd-grid{display:flex;justify-content:center;max-width:340px;margin:0 auto}
 .cd-item{
@@ -812,6 +812,7 @@ var musicBar = document.querySelector('.music-bar');
 var iconPlay  = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
 var iconPause = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
 var isPlaying = false;
+var started = false;
 
 function setPlaying(on){
   isPlaying = on;
@@ -819,31 +820,36 @@ function setPlaying(on){
   on ? musicBar.classList.add('playing') : musicBar.classList.remove('playing');
 }
 
-// Заставка
-var intro = document.getElementById('intro');
-var started = false;
-
-function start(){
+function startMusic(){
   if(started) return;
   started = true;
-  // Закрыть заставку
-  intro.classList.add('hide');
-  setTimeout(function(){ intro.style.display='none'; }, 1000);
-  // Запустить музыку синхронно — прямо в обработчике касания
   audio.play();
   setPlaying(true);
 }
 
-intro.addEventListener('touchstart', start, {passive:true});
-intro.addEventListener('click', start);
-
-// Десктоп: muted autoplay
+// Десктоп: автозапуск через muted трюк
 audio.muted = true;
 audio.play().then(function(){
   audio.muted = false;
-  setPlaying(true);
-  start();
+  startMusic();
 }).catch(function(){});
+
+// Телефон: запуск при ПЕРВОМ касании/скролле в любом месте страницы
+document.addEventListener('touchstart', startMusic, {once:true, passive:true});
+document.addEventListener('touchmove',  startMusic, {once:true, passive:true});
+
+// Заставка — при касании закрывается
+var intro = document.getElementById('intro');
+if(intro){
+  function closeIntro(){
+    intro.classList.add('hide');
+    setTimeout(function(){ intro.style.display='none'; }, 1000);
+  }
+  intro.addEventListener('touchstart', closeIntro, {once:true, passive:true});
+  intro.addEventListener('click', closeIntro, {once:true});
+  // Авто-закрытие через 4 сек
+  setTimeout(closeIntro, 4000);
+}
 
 playBtn.addEventListener('click', function(e){
   e.stopPropagation();
