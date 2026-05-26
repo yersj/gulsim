@@ -450,7 +450,7 @@ footer::before{content:'';position:absolute;inset:0;background:linear-gradient(1
   border-bottom:1px solid rgba(90,56,38,.25);
   background:transparent;padding:14px 4px;
   font-family:'Cormorant Garamond',serif;
-  font-size:22px;color:var(--brown);outline:none;
+  font-size:clamp(18px,5vw,22px);color:var(--brown);outline:none;
   transition:border-color .2s;
 }
 .wish-input:focus{border-bottom-color:var(--gold)}
@@ -461,7 +461,7 @@ footer::before{content:'';position:absolute;inset:0;background:linear-gradient(1
   border-bottom:1px solid rgba(90,56,38,.25);
   background:transparent;padding:14px 4px;
   font-family:'Cormorant Garamond',serif;
-  font-size:20px;color:var(--brown);outline:none;
+  font-size:clamp(18px,5vw,22px);color:var(--brown);outline:none;
   resize:none;line-height:1.7;transition:border-color .2s;
 }
 .wish-textarea:focus{border-bottom-color:var(--gold)}
@@ -471,7 +471,7 @@ footer::before{content:'';position:absolute;inset:0;background:linear-gradient(1
   background:var(--brown);color:#fff;border:none;
   padding:16px;width:100%;
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-weight:300;font-size:24px;letter-spacing:2px;
+  font-weight:300;font-size:clamp(18px,5vw,22px);letter-spacing:2px;
   cursor:pointer;transition:background .25s;
 }
 .wish-submit:hover{background:var(--brown-md)}
@@ -503,28 +503,25 @@ footer::before{content:'';position:absolute;inset:0;background:linear-gradient(1
 
 .wish-author{
   font-family:'Cormorant Garamond',serif;
-  font-style:italic;font-size:20px;
+  font-style:italic;font-size:clamp(18px,5vw,22px);
   color:var(--gold);margin-bottom:8px;padding-left:4px;
 }
 
 .wish-text{
   font-family:'Cormorant Garamond',serif;
-  font-style:italic;font-size:18px;
+  font-style:italic;font-size:clamp(16px,4.5vw,20px);
   color:var(--brown-md);line-height:1.85;padding-left:4px;
 }
 
 .wishes-empty{
   font-family:'Cormorant Garamond',serif;
-  font-style:italic;font-size:18px;color:var(--pearl);padding:20px 0;
+  font-style:italic;font-size:clamp(16px,4.5vw,20px);color:var(--pearl);padding:20px 0;
 }
 
 @media(max-width:600px){
   .wishes-sec{padding:56px 20px}
   .wish-card{padding:26px 24px 22px}
   .wish-card::before{font-size:56px;top:8px;left:14px}
-  .wish-author{font-size:18px}
-  .wish-text{font-size:17px}
-  .wish-input,.wish-textarea{font-size:18px}
 }
 
 /* ── BASE RESPONSIVE FIXES ── */
@@ -987,11 +984,29 @@ function renderWishes(list){
   }).join('');
 }
 
+var LS_KEY = 'gulsim_wishes';
+
+function saveLocal(list){
+  try{ localStorage.setItem(LS_KEY, JSON.stringify(list)); }catch(e){}
+}
+function readLocal(){
+  try{ return JSON.parse(localStorage.getItem(LS_KEY) || '[]'); }catch(e){ return []; }
+}
+
 function loadWishes(){
-  if(WISHES_URL.indexOf('PASTE') !== -1) return;
+  // Сразу показываем из localStorage
+  var local = readLocal();
+  if(local.length) renderWishes(local);
+
+  // Потом грузим с сервера и обновляем
   fetch(WISHES_URL, {redirect:'follow'})
     .then(function(r){ return r.json(); })
-    .then(renderWishes)
+    .then(function(list){
+      if(list && list.length){
+        saveLocal(list);
+        renderWishes(list);
+      }
+    })
     .catch(function(){});
 }
 loadWishes();
@@ -1007,6 +1022,11 @@ document.getElementById('wishesForm').addEventListener('submit', function(e){
   btn.disabled = true;
 
   var doFinish = function(){
+    // Сохраняем в localStorage
+    var local = readLocal();
+    local.push({name:name, message:msg});
+    saveLocal(local);
+
     var wall = document.getElementById('wishesWall');
     var empty = wall.querySelector('.wishes-empty');
     if(empty) empty.remove();
@@ -1020,8 +1040,6 @@ document.getElementById('wishesForm').addEventListener('submit', function(e){
     btn.textContent = 'Жіберу';
     btn.disabled = false;
   };
-
-  if(WISHES_URL.indexOf('PASTE') !== -1){ doFinish(); return; }
 
   fetch(WISHES_URL, {
     method:'POST', mode:'no-cors',
