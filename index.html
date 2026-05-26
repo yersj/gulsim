@@ -1043,6 +1043,9 @@ document.getElementById('wishesForm').addEventListener('submit', function(e){
   var raf = null;
   var stopped = false;
 
+  function getY(){ return window.pageYOffset || document.documentElement.scrollTop || 0; }
+  function getMax(){ return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight) - window.innerHeight; }
+
   function stopScroll(){
     stopped = true;
     if(raf){ cancelAnimationFrame(raf); raf = null; }
@@ -1050,11 +1053,12 @@ document.getElementById('wishesForm').addEventListener('submit', function(e){
 
   function step(){
     if(stopped) return;
-    if(window.scrollY + window.innerHeight >= document.body.scrollHeight - 2) return;
+    if(getY() >= getMax() - 2) return;
     acc += speed;
     if(acc >= 1){
-      window.scrollBy(0, Math.floor(acc));
-      acc -= Math.floor(acc);
+      var px = Math.floor(acc);
+      window.scrollTo(0, getY() + px);
+      acc -= px;
     }
     raf = requestAnimationFrame(step);
   }
@@ -1064,11 +1068,15 @@ document.getElementById('wishesForm').addEventListener('submit', function(e){
 
   window.startAutoScroll = function(){
     if(stopped) return;
+    acc = 0;
     raf = requestAnimationFrame(step);
   };
 })();
 
-setTimeout(function(){ if(window.startAutoScroll) window.startAutoScroll(); }, 300);
+// Ждём полной загрузки страницы потом запускаем скролл
+window.addEventListener('load', function(){
+  setTimeout(function(){ if(window.startAutoScroll) window.startAutoScroll(); }, 500);
+});
 </script>
 </body>
 </html>
