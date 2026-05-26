@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
@@ -251,10 +252,10 @@ body{
 }
 
 /* ── RSVP ── */
-.rsvp{background:var(--silk);padding:80px 24px 90px;text-align:center}
+.rsvp{background:var(--bg);border-top:2px solid var(--pearl);padding:80px 24px 90px;text-align:center}
 
 .rsvp-heading{
-  font-size:15px;font-style:italic;font-weight:300;
+  font-size:16px;font-style:italic;font-weight:400;
   letter-spacing:3px;color:var(--brown);
   margin-bottom:36px;
 }
@@ -270,11 +271,11 @@ body{
   transition:border-color .2s;
 }
 .rsvp-input:focus{border-bottom-color:var(--gold)}
-.rsvp-input::placeholder{color:var(--pearl);font-style:italic}
+.rsvp-input::placeholder{color:var(--brown-md);opacity:.4;font-style:italic}
 
 .rsvp-hint{
-  font-size:12px;font-style:italic;
-  color:var(--brown-md);opacity:.55;
+  font-size:13px;font-style:italic;
+  color:var(--brown-md);
   line-height:1.7;text-align:left;
 }
 
@@ -297,8 +298,8 @@ body{
 
 .r-text{
   font-family:'Montserrat',sans-serif;
-  font-size:10px;letter-spacing:1.5px;
-  color:var(--brown-md);
+  font-size:11px;letter-spacing:1.5px;
+  color:var(--brown);
 }
 
 .rsvp-btn{
@@ -321,6 +322,7 @@ footer{background:var(--brown);padding:48px 24px;text-align:center}
 .f-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:52px;color:rgba(255,255,255,.8);display:block;margin-bottom:10px}
 .f-date{font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:5px;color:var(--gold);opacity:.6}
 
+
 /* ── INTRO SPLASH ── */
 .intro{
   position:fixed;inset:0;z-index:99999;
@@ -328,73 +330,19 @@ footer{background:var(--brown);padding:48px 24px;text-align:center}
   align-items:center;justify-content:center;
   text-align:center;cursor:pointer;
   background:linear-gradient(155deg,#faf5ef 0%,#ede5db 40%,#f5ede4 70%,#e8ddd4 100%);
-  transition:opacity .8s ease, transform .8s ease;
+  transition:opacity 1s ease, transform 1s ease;
+  user-select:none;
 }
 .intro.hide{opacity:0;transform:scale(1.04);pointer-events:none}
-
-.intro-rose{
-  position:absolute;
-  pointer-events:none;opacity:.7;
-}
+.intro-rose{position:absolute;pointer-events:none;opacity:.7}
 .intro-rose-tl{top:-60px;left:-60px;width:220px}
 .intro-rose-br{bottom:-60px;right:-60px;width:200px;transform:rotate(180deg)}
-
-.intro-tag{
-  font-family:'Montserrat',sans-serif;
-  font-size:10px;letter-spacing:5px;
-  color:var(--brown-md);opacity:.6;
-  margin-bottom:16px;
-}
-.intro-name{
-  font-family:'Cormorant Garamond',serif;
-  font-style:italic;font-weight:300;
-  font-size:clamp(80px,22vw,140px);
-  color:var(--brown);line-height:.9;
-  text-shadow:0 4px 30px rgba(196,160,122,.3);
-  margin-bottom:20px;
-}
-.intro-date{
-  font-family:'Montserrat',sans-serif;
-  font-size:clamp(11px,3vw,13px);
-  letter-spacing:6px;color:var(--brown-md);
-  margin-bottom:40px;
-}
-.intro-btn{
-  display:flex;flex-direction:column;align-items:center;gap:10px;
-  animation:pulse-btn 2s ease-in-out infinite;
-}
-.intro-btn span{
-  font-family:'Montserrat',sans-serif;
-  font-size:9px;letter-spacing:4px;
-  color:var(--brown-md);opacity:.55;
-}
-.intro-btn svg{opacity:.4}
-@keyframes pulse-btn{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(6px)}
-}
-
-/* ── FLOATING PHOTOS ── */
-.floaters{
-  position:fixed;inset:0;z-index:0;
-  pointer-events:none;overflow:hidden;
-}
-.floater{
-  position:absolute;
-  border-radius:50%;
-  object-fit:cover;
-  opacity:0.1;
-  filter:blur(0.5px);
-  animation:swim linear infinite;
-  will-change:transform;
-}
-@keyframes swim{
-  0%  {transform:translate(0,0) rotate(0deg) scale(1)}
-  25% {transform:translate(30px,-40px) rotate(8deg) scale(1.05)}
-  50% {transform:translate(-20px,-80px) rotate(-5deg) scale(0.95)}
-  75% {transform:translate(40px,-120px) rotate(10deg) scale(1.03)}
-  100%{transform:translate(0,-160px) rotate(0deg) scale(1);opacity:0}
-}
+.intro-tag{font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:5px;color:var(--brown-md);opacity:.6;margin-bottom:16px}
+.intro-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:clamp(80px,22vw,140px);color:var(--brown);line-height:.9;text-shadow:0 4px 30px rgba(196,160,122,.3);margin-bottom:20px}
+.intro-date{font-family:'Montserrat',sans-serif;font-size:clamp(11px,3vw,13px);letter-spacing:6px;color:var(--brown-md);margin-bottom:48px}
+.intro-tap{display:flex;flex-direction:column;align-items:center;gap:8px;animation:bob 2s ease-in-out infinite}
+.intro-tap-line{width:1px;height:40px;background:linear-gradient(to bottom,transparent,var(--gold))}
+.intro-tap-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);opacity:.6}
 
 /* ── MUSIC PLAYER ── */
 .music-bar{
@@ -503,22 +451,6 @@ footer{background:var(--brown);padding:48px 24px;text-align:center}
 </head>
 <body>
 
-<!-- INTRO SPLASH -->
-<div class="intro" id="intro">
-  <svg class="intro-rose intro-rose-tl" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg"><g opacity=".9"><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(0,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#f9f4ef" transform="rotate(51.4,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(102.9,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#f9f4ef" transform="rotate(154.3,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(205.7,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#f9f4ef" transform="rotate(257.1,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(308.6,140,140)"/><path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#f2e8de" transform="rotate(25.7,140,140)"/><path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#ede3d8" transform="rotate(85.7,140,140)"/><path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#f2e8de" transform="rotate(145.7,140,140)"/><path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#ede3d8" transform="rotate(205.7,140,140)"/><path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#f2e8de" transform="rotate(265.7,140,140)"/><circle cx="140" cy="140" r="24" fill="#d8c9ba"/><circle cx="140" cy="140" r="16" fill="#ccb9a8"/><circle cx="140" cy="140" r="9" fill="#c4ae9d"/></g></svg>
-  <svg class="intro-rose intro-rose-br" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg"><g opacity=".85"><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(0,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#f9f4ef" transform="rotate(51.4,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(102.9,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#f9f4ef" transform="rotate(154.3,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(205.7,140,140)"/><circle cx="140" cy="140" r="24" fill="#d8c9ba"/><circle cx="140" cy="140" r="16" fill="#ccb9a8"/></g></svg>
-
-  <div class="intro-tag">— ҚЫЗ ҰЗАТУ —</div>
-  <div class="intro-name">Гүлсім</div>
-  <div class="intro-date">24 · 08 · 2026</div>
-  <div class="intro-btn">
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#5a3826" stroke-width="1.2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
-    <span>БАСУ</span>
-  </div>
-</div>
-
-<!-- FLOATING PHOTOS -->
-<div class="floaters" id="floaters"></div>
 
 <!-- HERO -->
 <section class="hero">
@@ -724,9 +656,7 @@ footer{background:var(--brown);padding:48px 24px;text-align:center}
 </div>
 
 <!-- MUSIC PLAYER -->
-<audio id="bgAudio" loop preload="none">
-  <source src="track.m4a" type="audio/mp4">
-</audio>
+<audio id="bgAudio" src="track.m4a" loop preload="auto"></audio>
 <div class="music-bar">
   <button id="playBtn" title="Музыка">
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
@@ -741,72 +671,6 @@ footer{background:var(--brown);padding:48px 24px;text-align:center}
 </footer>
 
 <script>
-// Floating photos
-(function(){
-  var container = document.getElementById('floaters');
-  var sizes = [110, 140, 100, 160, 120, 130, 150, 115];
-  var count = 0;
-
-  function spawn(big){
-    var img = document.createElement('img');
-    img.src = 'float.png';
-    img.className = 'floater';
-
-    var size = big
-      ? 160 + Math.random() * 60
-      : sizes[count % sizes.length] + Math.random() * 30;
-    var startX = Math.random() * (window.innerWidth - size);
-    var dur = big ? 6 + Math.random() * 4 : 10 + Math.random() * 8;
-    var maxOpacity = big ? 0.28 : 0.18;
-    var drift = (Math.random() - 0.5) * 140;
-
-    img.style.cssText = [
-      'width:' + size + 'px',
-      'height:' + size + 'px',
-      'left:' + startX + 'px',
-      'bottom:-' + (size + 20) + 'px',
-      'opacity:0',
-      'border-radius:50%',
-      'box-shadow:0 6px 30px rgba(196,160,122,0.4)',
-      'border:2px solid rgba(196,160,122,0.25)'
-    ].join(';');
-
-    container.appendChild(img);
-    count++;
-
-    var start = null;
-    var totalHeight = window.innerHeight + size + 40;
-
-    function animate(ts){
-      if(!start) start = ts;
-      var progress = (ts - start) / (dur * 1000);
-      if(progress >= 1){ img.remove(); return; }
-
-      var y = -totalHeight * progress;
-      var x = drift * Math.sin(progress * Math.PI * 2);
-      var scale = 0.92 + Math.sin(progress * Math.PI) * 0.15;
-      var opacity = progress < 0.12 ? (progress / 0.12) * maxOpacity
-                  : progress > 0.75 ? ((1 - progress) / 0.25) * maxOpacity
-                  : maxOpacity;
-      var rotate = Math.sin(progress * Math.PI * 2.5) * 10;
-
-      img.style.transform = 'translateX(' + x + 'px) translateY(' + y + 'px) scale(' + scale + ') rotate(' + rotate + 'deg)';
-      img.style.opacity = opacity;
-      requestAnimationFrame(animate);
-    }
-    requestAnimationFrame(animate);
-  }
-
-  // При открытии — сразу 4 крупных
-  for(var i = 0; i < 4; i++){
-    setTimeout(function(){ spawn(true); }, i * 300);
-  }
-  // Потом обычные каждые 1.5 сек
-  setTimeout(function(){
-    setInterval(function(){ spawn(false); }, 1500);
-  }, 1200);
-})();
-
 // Countdown
 (function(){
   var target = new Date('2026-08-24T16:00:00').getTime();
@@ -863,57 +727,49 @@ document.getElementById('rsvpForm').addEventListener('submit', function(e) {
 var audio = document.getElementById('bgAudio');
 var playBtn = document.getElementById('playBtn');
 var musicBar = document.querySelector('.music-bar');
-var isPlaying = false;
-
 var iconPlay  = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
 var iconPause = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
-
-audio.volume = 0.45;
+var isPlaying = false;
 
 function fadeIn(){
-  var vol = 0;
-  audio.volume = 0;
-  var f = setInterval(function(){
-    vol = Math.min(vol + 0.04, 0.45);
+  var vol = 0; audio.volume = 0;
+  var t = setInterval(function(){
+    vol = Math.min(vol + 0.03, 0.45);
     audio.volume = vol;
-    if(vol >= 0.45) clearInterval(f);
+    if(vol >= 0.45) clearInterval(t);
   }, 80);
 }
 
-function startPlay(){
-  audio.muted = false;
-  audio.play().then(function(){
-    isPlaying = true;
-    playBtn.innerHTML = iconPause;
-    musicBar.classList.add('playing');
-    fadeIn();
-  }).catch(function(){});
+function setPlaying(on){
+  isPlaying = on;
+  playBtn.innerHTML = on ? iconPause : iconPlay;
+  on ? musicBar.classList.add('playing') : musicBar.classList.remove('playing');
 }
 
-function stopPlay(){
-  audio.pause();
-  audio.volume = 0;
-  isPlaying = false;
-  playBtn.innerHTML = iconPlay;
-  musicBar.classList.remove('playing');
-}
+// Muted autoplay trick — работает на всех десктопных браузерах
+audio.muted = true;
+audio.volume = 0;
+audio.play().then(function(){
+  audio.muted = false;
+  setPlaying(true);
+  fadeIn();
+}).catch(function(){
+  // Мобильный заблокировал — ждём первого касания
+  function unlock(){
+    audio.muted = false;
+    audio.play().then(function(){ setPlaying(true); fadeIn(); }).catch(function(){});
+    document.removeEventListener('touchend', unlock);
+    document.removeEventListener('click', unlock);
+  }
+  document.addEventListener('touchend', unlock, { once: true });
+  document.addEventListener('click', unlock, { once: true });
+});
 
 playBtn.addEventListener('click', function(e){
   e.stopPropagation();
-  isPlaying ? stopPlay() : startPlay();
+  if(isPlaying){ audio.pause(); audio.volume=0; setPlaying(false); }
+  else { audio.muted=false; audio.play().then(function(){ setPlaying(true); fadeIn(); }); }
 });
-
-// Заставка → музыка
-var intro = document.getElementById('intro');
-intro.addEventListener('click', openSite);
-intro.addEventListener('touchend', function(e){ e.preventDefault(); openSite(); });
-
-function openSite(){
-  if(intro.classList.contains('hide')) return;
-  intro.classList.add('hide');
-  startPlay();
-  setTimeout(function(){ intro.style.display='none'; }, 900);
-}
 </script>
 </body>
 </html>
