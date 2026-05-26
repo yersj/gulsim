@@ -947,28 +947,11 @@ function renderWishes(list){
   }).join('');
 }
 
-var LS_KEY = 'gulsim_wishes';
-
-function saveLocal(list){
-  try{ localStorage.setItem(LS_KEY, JSON.stringify(list)); }catch(e){}
-}
-function readLocal(){
-  try{ return JSON.parse(localStorage.getItem(LS_KEY) || '[]'); }catch(e){ return []; }
-}
-
 function loadWishes(){
-  // Сразу показываем из localStorage
-  var local = readLocal();
-  if(local.length) renderWishes(local);
-
-  // Потом грузим с сервера и обновляем
   fetch(WISHES_URL, {redirect:'follow'})
     .then(function(r){ return r.json(); })
     .then(function(list){
-      if(list && Array.isArray(list)){
-        saveLocal(list);
-        renderWishes(list);
-      }
+      if(list && Array.isArray(list)) renderWishes(list);
     })
     .catch(function(){});
 }
@@ -985,11 +968,6 @@ document.getElementById('wishesForm').addEventListener('submit', function(e){
   btn.disabled = true;
 
   var doFinish = function(){
-    // Сохраняем в localStorage
-    var local = readLocal();
-    local.push({name:name, message:msg});
-    saveLocal(local);
-
     var wall = document.getElementById('wishesWall');
     var empty = wall.querySelector('.wishes-empty');
     if(empty) empty.remove();
