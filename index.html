@@ -813,15 +813,6 @@ var iconPlay  = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l1
 var iconPause = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
 var isPlaying = false;
 
-function fadeIn(){
-  var vol = 0; audio.volume = 0;
-  var t = setInterval(function(){
-    vol = Math.min(vol + 0.03, 0.45);
-    audio.volume = vol;
-    if(vol >= 0.45) clearInterval(t);
-  }, 80);
-}
-
 function setPlaying(on){
   isPlaying = on;
   playBtn.innerHTML = on ? iconPause : iconPlay;
@@ -830,39 +821,34 @@ function setPlaying(on){
 
 // Заставка
 var intro = document.getElementById('intro');
-var siteOpened = false;
+var started = false;
 
-function closeIntro(){
-  if(siteOpened) return;
-  siteOpened = true;
+function start(){
+  if(started) return;
+  started = true;
+  // Закрыть заставку
   intro.classList.add('hide');
   setTimeout(function(){ intro.style.display='none'; }, 1000);
+  // Запустить музыку синхронно — прямо в обработчике касания
+  audio.play();
+  setPlaying(true);
 }
 
-// Тап по заставке — запускает музыку (с пользовательским жестом)
-function tapHandler(){
-  closeIntro();
-  audio.muted = false;
-  audio.volume = 0.45;
-  audio.play().then(function(){ setPlaying(true); }).catch(function(){});
-}
-intro.addEventListener('click', tapHandler);
-intro.addEventListener('touchstart', function(e){ e.preventDefault(); tapHandler(); }, {passive:false});
+intro.addEventListener('touchstart', start, {passive:true});
+intro.addEventListener('click', start);
 
-// Десктоп: muted autoplay без касания
+// Десктоп: muted autoplay
 audio.muted = true;
-audio.volume = 0;
 audio.play().then(function(){
   audio.muted = false;
   setPlaying(true);
-  fadeIn();
-  closeIntro(); // закрываем заставку, НЕ трогая аудио повторно
-}).catch(function(){ /* мобильный — ждём тапа */ });
+  start();
+}).catch(function(){});
 
 playBtn.addEventListener('click', function(e){
   e.stopPropagation();
-  if(isPlaying){ audio.pause(); audio.volume=0; setPlaying(false); }
-  else { audio.muted=false; audio.play().then(function(){ setPlaying(true); fadeIn(); }); }
+  if(isPlaying){ audio.pause(); setPlaying(false); }
+  else { audio.play(); setPlaying(true); }
 });
 </script>
 </body>
