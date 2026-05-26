@@ -432,6 +432,101 @@ footer::before{content:'';position:absolute;inset:0;background:linear-gradient(1
   50%{box-shadow:0 0 0 8px rgba(196,160,122,0)}
 }
 
+/* ── WISHES ── */
+.wishes-sec{
+  background:var(--surface);
+  padding:80px 24px;
+  text-align:center;
+  border-top:1px solid var(--pearl);
+}
+
+.wishes-form{
+  max-width:480px;margin:0 auto 48px;
+  display:flex;flex-direction:column;gap:20px;
+}
+
+.wish-input{
+  width:100%;border:none;
+  border-bottom:1px solid rgba(90,56,38,.25);
+  background:transparent;padding:14px 4px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;color:var(--brown);outline:none;
+  transition:border-color .2s;
+}
+.wish-input:focus{border-bottom-color:var(--gold)}
+.wish-input::placeholder{color:rgba(43,26,18,.35);font-style:italic}
+
+.wish-textarea{
+  width:100%;min-height:110px;border:none;
+  border-bottom:1px solid rgba(90,56,38,.25);
+  background:transparent;padding:14px 4px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:20px;color:var(--brown);outline:none;
+  resize:none;line-height:1.7;transition:border-color .2s;
+}
+.wish-textarea:focus{border-bottom-color:var(--gold)}
+.wish-textarea::placeholder{color:rgba(43,26,18,.35);font-style:italic}
+
+.wish-submit{
+  background:var(--brown);color:#fff;border:none;
+  padding:16px;width:100%;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-weight:300;font-size:24px;letter-spacing:2px;
+  cursor:pointer;transition:background .25s;
+}
+.wish-submit:hover{background:var(--brown-md)}
+
+.wishes-divider{
+  width:80px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  margin:0 auto 44px;
+}
+
+.wishes-wall{
+  max-width:560px;margin:0 auto;
+  display:flex;flex-direction:column;gap:20px;
+}
+
+.wish-card{
+  background:#fff;padding:32px 36px 28px;
+  text-align:left;
+  box-shadow:0 2px 16px rgba(44,26,18,.06);
+  position:relative;
+  animation:fadeUp .5s ease;
+}
+.wish-card::before{
+  content:'\201C';
+  font-family:'Cormorant Garamond',serif;
+  font-size:72px;color:var(--pearl);line-height:1;
+  position:absolute;top:10px;left:20px;opacity:.7;
+}
+
+.wish-author{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;font-size:20px;
+  color:var(--gold);margin-bottom:8px;padding-left:4px;
+}
+
+.wish-text{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;font-size:18px;
+  color:var(--brown-md);line-height:1.85;padding-left:4px;
+}
+
+.wishes-empty{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;font-size:18px;color:var(--pearl);padding:20px 0;
+}
+
+@media(max-width:600px){
+  .wishes-sec{padding:56px 20px}
+  .wish-card{padding:26px 24px 22px}
+  .wish-card::before{font-size:56px;top:8px;left:14px}
+  .wish-author{font-size:18px}
+  .wish-text{font-size:17px}
+  .wish-input,.wish-textarea{font-size:18px}
+}
+
 /* ── BASE RESPONSIVE FIXES ── */
 .i-greeting{font-size:clamp(28px,8vw,42px)}
 .hosts-name{font-size:clamp(24px,7vw,36px)}
@@ -737,6 +832,20 @@ footer::before{content:'';position:absolute;inset:0;background:linear-gradient(1
   <div class="rsvp-thanks" id="rsvpThanks">Рахмет!<br>Жауабыңыз қабылданды ✨</div>
 </div>
 
+<!-- WISHES -->
+<div class="wishes-sec">
+  <div class="sec-label">ТІЛЕКТЕР</div>
+  <form class="wishes-form" id="wishesForm">
+    <input class="wish-input" id="wishName" type="text" placeholder="Есіміңіз" required>
+    <textarea class="wish-textarea" id="wishMsg" placeholder="Тілегіңізді жазыңыз..." required></textarea>
+    <button type="submit" class="wish-submit">Жіберу</button>
+  </form>
+  <div class="wishes-divider"></div>
+  <div class="wishes-wall" id="wishesWall">
+    <div class="wishes-empty">Алғашқы тілекті жазыңыз!</div>
+  </div>
+</div>
+
 <!-- MUSIC PLAYER -->
 <audio id="bgAudio" src="track.m4a" loop preload="auto"></audio>
 <div class="music-bar">
@@ -856,6 +965,101 @@ playBtn.addEventListener('click', function(e){
   if(isPlaying){ audio.pause(); setPlaying(false); }
   else { audio.play(); setPlaying(true); }
 });
+
+// Wishes
+var WISHES_URL = 'https://script.google.com/macros/s/AKfycbwuK8VkeVD2funEH4kpARft6qUwwQiz1lcu5NmJfd-xJObi3i6o71FjDfKgKufl6-XJ/exec';
+
+function escHtml(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function renderWishes(list){
+  var wall = document.getElementById('wishesWall');
+  if(!list || !list.length){
+    wall.innerHTML = '<div class="wishes-empty">Алғашқы тілекті жазыңыз!</div>';
+    return;
+  }
+  wall.innerHTML = list.slice().reverse().map(function(w){
+    return '<div class="wish-card">'+
+      '<div class="wish-author">'+escHtml(w.name)+'</div>'+
+      '<div class="wish-text">'+escHtml(w.message)+'</div>'+
+    '</div>';
+  }).join('');
+}
+
+function loadWishes(){
+  if(WISHES_URL.indexOf('PASTE') !== -1) return;
+  fetch(WISHES_URL, {redirect:'follow'})
+    .then(function(r){ return r.json(); })
+    .then(renderWishes)
+    .catch(function(){});
+}
+loadWishes();
+
+document.getElementById('wishesForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  var name = document.getElementById('wishName').value.trim();
+  var msg  = document.getElementById('wishMsg').value.trim();
+  if(!name || !msg) return;
+
+  var btn = this.querySelector('.wish-submit');
+  btn.textContent = '...';
+  btn.disabled = true;
+
+  var doFinish = function(){
+    var wall = document.getElementById('wishesWall');
+    var empty = wall.querySelector('.wishes-empty');
+    if(empty) empty.remove();
+    var card = document.createElement('div');
+    card.className = 'wish-card';
+    card.innerHTML = '<div class="wish-author">'+escHtml(name)+'</div>'+
+                     '<div class="wish-text">'+escHtml(msg)+'</div>';
+    wall.insertBefore(card, wall.firstChild);
+    document.getElementById('wishName').value = '';
+    document.getElementById('wishMsg').value  = '';
+    btn.textContent = 'Жіберу';
+    btn.disabled = false;
+  };
+
+  if(WISHES_URL.indexOf('PASTE') !== -1){ doFinish(); return; }
+
+  fetch(WISHES_URL, {
+    method:'POST', mode:'no-cors',
+    headers:{'Content-Type':'text/plain'},
+    body: JSON.stringify({name:name, message:msg})
+  }).then(doFinish).catch(doFinish);
+});
+
+// Slow auto-scroll
+(function(){
+  var speed = 0.4; // px per frame
+  var raf = null;
+  var stopped = false;
+
+  function stopScroll(){
+    stopped = true;
+    if(raf){ cancelAnimationFrame(raf); raf = null; }
+  }
+
+  function startScroll(){
+    if(stopped) return;
+    raf = requestAnimationFrame(function step(){
+      if(stopped) return;
+      var atBottom = window.scrollY + window.innerHeight >= document.body.scrollHeight - 2;
+      if(atBottom){ return; }
+      window.scrollBy(0, speed);
+      raf = requestAnimationFrame(step);
+    });
+  }
+
+  // Stop on any user interaction
+  ['touchstart','wheel','mousedown','keydown'].forEach(function(ev){
+    window.addEventListener(ev, stopScroll, {passive:true});
+  });
+
+  // Start after intro closes (4s) + small delay
+  setTimeout(startScroll, 4600);
+})();
 </script>
 </body>
 </html>
