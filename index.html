@@ -7,7 +7,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
@@ -333,6 +335,45 @@ footer::before{content:'';position:absolute;inset:0;background:linear-gradient(1
 .f-date{font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:6px;color:var(--gold)}
 
 
+
+/* ── PETALS ── */
+.petal{
+  position:fixed;top:-30px;
+  pointer-events:none;z-index:9997;
+  border-radius:60% 40% 60% 40% / 60% 60% 40% 40%;
+  animation:petalFall linear forwards;
+}
+@keyframes petalFall{
+  0%{transform:translateY(0) rotate(0deg) translateX(0);opacity:.9}
+  25%{transform:translateY(25vh) rotate(90deg) translateX(-28px)}
+  50%{transform:translateY(50vh) rotate(180deg) translateX(22px)}
+  75%{transform:translateY(75vh) rotate(270deg) translateX(-18px)}
+  100%{transform:translateY(110vh) rotate(360deg) translateX(12px);opacity:0}
+}
+
+/* ── GOLD SHIMMER ── */
+@keyframes pearlGlow{
+  0%,100%{box-shadow:0 1px 4px rgba(0,0,0,.12)}
+  50%{box-shadow:0 2px 12px rgba(196,160,122,.55),0 1px 4px rgba(0,0,0,.12)}
+}
+.p-l{animation:pearlGlow 2.5s ease-in-out infinite}
+
+@keyframes labelPulse{
+  0%,100%{opacity:.7}
+  50%{opacity:1}
+}
+.sec-label{animation:labelPulse 3s ease-in-out infinite}
+
+.gold-line,.wishes-divider,.i-sep::before,.i-sep::after{position:relative;overflow:hidden}
+.gold-line::after,.wishes-divider::after{
+  content:'';position:absolute;top:0;left:-100%;
+  width:60%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.9),transparent);
+  animation:lineSwipe 3.5s ease-in-out infinite;
+}
+@keyframes lineSwipe{
+  0%{left:-60%}60%{left:120%}100%{left:120%}
+}
 
 /* ── INTRO SPLASH ── */
 .intro{
@@ -730,7 +771,7 @@ footer::before{content:'';position:absolute;inset:0;background:linear-gradient(1
 </section>
 
 <!-- CALENDAR -->
-<div class="cal-section">
+<div class="cal-section" data-aos="fade-up">
   <div class="sec-label">ТАМЫЗ 2026</div>
   <table class="cal">
     <thead>
@@ -748,7 +789,7 @@ footer::before{content:'';position:absolute;inset:0;background:linear-gradient(1
 </div>
 
 <!-- INVITE TEXT -->
-<div class="invite">
+<div class="invite" data-aos="fade-up">
   <div class="i-greeting">Құрметті қонақтар!</div>
   <p class="i-body">Сіздерді аяулы</p>
   <div class="i-bride">Гүлсім</div>
@@ -773,7 +814,7 @@ footer::before{content:'';position:absolute;inset:0;background:linear-gradient(1
 </div>
 
 <!-- COUNTDOWN -->
-<div class="cd">
+<div class="cd" data-aos="fade-up">
   <div class="cd-title">ТОЙ САЛТАНАТЫНА ДЕЙІН</div>
   <div class="cd-grid">
     <div class="cd-item"><span class="cd-num" id="cd-d">00</span><span class="cd-lbl">КҮН</span></div>
@@ -784,7 +825,7 @@ footer::before{content:'';position:absolute;inset:0;background:linear-gradient(1
 </div>
 
 <!-- VENUE -->
-<div class="venue">
+<div class="venue" data-aos="fade-up">
   <div class="sec-label">МЕКЕНЖАЙЫ</div>
   <div class="arch">
     <div class="venue-lbl">МЕЙРАМХАНА</div>
@@ -811,7 +852,7 @@ footer::before{content:'';position:absolute;inset:0;background:linear-gradient(1
 </div>
 
 <!-- RSVP -->
-<div class="rsvp">
+<div class="rsvp" data-aos="fade-up">
   <svg class="rsvp-rose rsvp-rose-tl" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg"><g><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fff" transform="rotate(0,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fff" transform="rotate(51.4,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fff" transform="rotate(102.9,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fff" transform="rotate(154.3,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fff" transform="rotate(205.7,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fff" transform="rotate(257.1,140,140)"/><circle cx="140" cy="140" r="22" fill="#c4a07a"/><circle cx="140" cy="140" r="13" fill="#b8936a"/></g></svg>
   <svg class="rsvp-rose rsvp-rose-br" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg"><g><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fff" transform="rotate(0,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fff" transform="rotate(51.4,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fff" transform="rotate(102.9,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fff" transform="rotate(154.3,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fff" transform="rotate(205.7,140,140)"/><circle cx="140" cy="140" r="22" fill="#c4a07a"/><circle cx="140" cy="140" r="13" fill="#b8936a"/></g></svg>
   <div class="sec-label" style="color:var(--gold)">РАСТАУ</div>
@@ -830,7 +871,7 @@ footer::before{content:'';position:absolute;inset:0;background:linear-gradient(1
 </div>
 
 <!-- WISHES -->
-<div class="wishes-sec">
+<div class="wishes-sec" data-aos="fade-up">
   <div class="sec-label">ТІЛЕКТЕР</div>
   <form class="wishes-form" id="wishesForm">
     <input class="wish-input" id="wishName" type="text" placeholder="Есіміңіз" required>
@@ -859,6 +900,9 @@ footer::before{content:'';position:absolute;inset:0;background:linear-gradient(1
 </footer>
 
 <script>
+// AOS
+AOS.init({duration:900, easing:'ease-out-cubic', once:true, offset:70});
+
 // Countdown
 (function(){
   var target = new Date('2026-08-24T17:00:00').getTime();
@@ -933,16 +977,24 @@ function startMusic(){
   setPlaying(true);
 }
 
-// Десктоп: автозапуск через muted трюк
+// Автозапуск: muted трюк (десктоп)
 audio.muted = true;
 audio.play().then(function(){
   audio.muted = false;
-  startMusic();
+  setPlaying(true);
+  started = true;
 }).catch(function(){});
 
-// Телефон: запуск при ПЕРВОМ касании/скролле в любом месте страницы
-document.addEventListener('touchstart', startMusic, {once:true, passive:true});
-document.addEventListener('touchmove',  startMusic, {once:true, passive:true});
+// Первое взаимодействие — запуск (телефон + десктоп)
+function onFirstInteraction(){
+  startMusic();
+  document.removeEventListener('touchstart', onFirstInteraction);
+  document.removeEventListener('click', onFirstInteraction);
+  document.removeEventListener('keydown', onFirstInteraction);
+}
+document.addEventListener('touchstart', onFirstInteraction, {once:true, passive:true});
+document.addEventListener('click',      onFirstInteraction, {once:true});
+document.addEventListener('keydown',    onFirstInteraction, {once:true});
 
 // Заставка — при касании закрывается
 var intro = document.getElementById('intro');
@@ -1047,6 +1099,31 @@ document.getElementById('wishesForm').addEventListener('submit', function(e){
     body: JSON.stringify({name:name, message:msg})
   }).then(doFinish).catch(doFinish);
 });
+
+// Falling petals
+(function(){
+  var shades = [
+    'rgba(252,248,244,.82)','rgba(249,244,239,.76)',
+    'rgba(242,232,222,.72)','rgba(237,227,216,.68)'
+  ];
+  function spawn(){
+    var p = document.createElement('div');
+    p.className = 'petal';
+    var s = 9 + Math.random()*8;
+    p.style.cssText =
+      'left:'+(Math.random()*108-4)+'vw;'+
+      'width:'+s+'px;height:'+(s*1.35)+'px;'+
+      'background:'+shades[Math.floor(Math.random()*shades.length)]+';'+
+      'animation-duration:'+(7+Math.random()*7)+'s;'+
+      'transform:rotate('+(Math.random()*360)+'deg)';
+    document.body.appendChild(p);
+    p.addEventListener('animationend',function(){p.remove()});
+  }
+  setTimeout(function(){
+    spawn();
+    setInterval(spawn, 1100);
+  }, 5200);
+})();
 
 // Slow auto-scroll
 (function(){
