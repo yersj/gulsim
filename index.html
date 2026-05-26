@@ -997,21 +997,27 @@ audio.muted = true;
 audio.play().then(function(){
   started = true;
   setPlaying(true);
-  // Подсказка "тап — звук"
-  var hint = document.createElement('div');
-  hint.id = 'soundHint';
-  hint.style.cssText = 'position:fixed;bottom:80px;right:24px;z-index:10000;'+
-    'background:rgba(43,26,18,.88);color:#c4a07a;'+
-    'font-family:Montserrat,sans-serif;font-size:9px;letter-spacing:2px;'+
-    'padding:8px 16px;border-radius:20px;opacity:0;transition:opacity .6s;'+
-    'pointer-events:none;';
-  hint.textContent = 'ТАП — ДЫБЫС';
-  document.body.appendChild(hint);
-  setTimeout(function(){ hint.style.opacity='1'; }, 800);
-  document.addEventListener('touchstart', unmuteTap, {once:true, passive:true});
-  document.addEventListener('click',      unmuteTap, {once:true});
+  // Пробуем сразу включить звук (работает на Chrome/Android, не на iOS)
+  audio.muted = false;
+  // Если браузер не дал — показываем подсказку и ждём касания
+  setTimeout(function(){
+    if(audio.muted){
+      var hint = document.createElement('div');
+      hint.id = 'soundHint';
+      hint.style.cssText = 'position:fixed;bottom:80px;right:24px;z-index:10000;'+
+        'background:rgba(43,26,18,.88);color:#c4a07a;'+
+        'font-family:Montserrat,sans-serif;font-size:9px;letter-spacing:2px;'+
+        'padding:8px 16px;border-radius:20px;opacity:0;transition:opacity .6s;'+
+        'pointer-events:none;';
+      hint.textContent = 'ТАП — ДЫБЫС';
+      document.body.appendChild(hint);
+      setTimeout(function(){ hint.style.opacity='1'; }, 100);
+      document.addEventListener('touchstart', unmuteTap, {once:true, passive:true});
+      document.addEventListener('click',      unmuteTap, {once:true});
+    }
+  }, 300);
 }).catch(function(){
-  // Autoplay заблокирован — ждём касания
+  // Autoplay полностью заблокирован — ждём касания
   document.addEventListener('touchstart', startMusic, {once:true, passive:true});
   document.addEventListener('touchmove',  startMusic, {once:true, passive:true});
   document.addEventListener('click',      startMusic, {once:true});
@@ -1172,7 +1178,7 @@ document.getElementById('wishesForm').addEventListener('submit', function(e){
   // Запускаем когда заставка закрывается
   window.startAutoScroll = function(){
     if(stopped) return;
-    setTimeout(function(){ if(!stopped) raf = requestAnimationFrame(step); }, 700);
+    raf = requestAnimationFrame(step);
   };
 })();
 </script>
