@@ -64,21 +64,20 @@ body{
   background:repeating-linear-gradient(108deg,transparent,transparent 6px,rgba(255,255,255,.04) 6px,rgba(255,255,255,.04) 7px);
 }
 
-/* Roses */
-.rose{
-  position:absolute;
-  z-index:1;
-  pointer-events:none;
-}
-.rose-tl{top:-70px;left:-70px;width:260px;animation:floatA 7s ease-in-out infinite}
-.rose-br{bottom:-70px;right:-70px;width:240px;animation:floatA 7s ease-in-out infinite 3.5s;transform:rotate(180deg)}
-.rose-tr{top:-50px;right:-50px;width:200px;animation:floatB 8s ease-in-out infinite 1.5s;transform:scaleX(-1)}
-
-@keyframes floatA{0%,100%{transform:rotate(180deg) translateY(0)}50%{transform:rotate(180deg) translateY(-10px)}}
-@keyframes floatB{0%,100%{transform:scaleX(-1) translateY(0)}50%{transform:scaleX(-1) translateY(-10px)}}
 
 /* Hero content */
 .hero-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center}
+
+.hero-top{
+  display:flex;flex-direction:column;align-items:center;
+  opacity:0;animation:slideInLeft 1s ease-out .2s forwards;
+}
+.hero-bottom{
+  display:flex;flex-direction:column;align-items:center;
+  opacity:0;animation:slideInRight 1s ease-out .5s forwards;
+}
+@keyframes slideInLeft{from{opacity:0;transform:translateX(-60px)}to{opacity:1;transform:translateX(0)}}
+@keyframes slideInRight{from{opacity:0;transform:translateX(60px)}to{opacity:1;transform:translateX(0)}}
 
 .hero-tag{
   font-family:'Montserrat',sans-serif;
@@ -266,10 +265,6 @@ body{
   text-align:center;
   position:relative;overflow:hidden;
 }
-.rsvp-rose{position:absolute;pointer-events:none;opacity:.08}
-.rsvp-rose-tl{top:-40px;left:-40px;width:220px;transform:rotate(20deg)}
-.rsvp-rose-br{bottom:-40px;right:-40px;width:200px;transform:rotate(200deg)}
-
 .rsvp-heading{
   font-size:22px;font-style:italic;font-weight:400;
   letter-spacing:3px;color:#fff;
@@ -526,9 +521,6 @@ footer::before{content:'';position:absolute;inset:0;background:linear-gradient(1
 @media(max-width:600px){
   /* Hero */
   .hero{padding:70px 20px 90px}
-  .rose-tl{width:180px;top:-50px;left:-50px}
-  .rose-br{width:160px;bottom:-50px;right:-50px}
-  .rose-tr{width:130px;top:-35px;right:-35px}
   .hero-tag{letter-spacing:3px;font-size:9px}
   .hero-date{letter-spacing:6px}
 
@@ -621,98 +613,23 @@ footer::before{content:'';position:absolute;inset:0;background:linear-gradient(1
 <section class="hero">
   <div class="hero-bg"></div>
 
-  <!-- Rose top-left -->
-  <svg class="rose rose-tl" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
-    <g opacity=".9">
-      <!-- outer petals -->
-      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(0,140,140)"/>
-      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#f9f4ef" transform="rotate(51.4,140,140)"/>
-      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(102.9,140,140)"/>
-      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#f9f4ef" transform="rotate(154.3,140,140)"/>
-      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(205.7,140,140)"/>
-      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#f9f4ef" transform="rotate(257.1,140,140)"/>
-      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(308.6,140,140)"/>
-      <!-- middle petals -->
-      <path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#f2e8de" transform="rotate(25.7,140,140)"/>
-      <path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#ede3d8" transform="rotate(85.7,140,140)"/>
-      <path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#f2e8de" transform="rotate(145.7,140,140)"/>
-      <path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#ede3d8" transform="rotate(205.7,140,140)"/>
-      <path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#f2e8de" transform="rotate(265.7,140,140)"/>
-      <path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#ede3d8" transform="rotate(325.7,140,140)"/>
-      <!-- inner petals -->
-      <path d="M140,140 C122,124 116,100 140,82 C164,100 158,124 140,140Z" fill="#e5d8cc" transform="rotate(13,140,140)"/>
-      <path d="M140,140 C122,124 116,100 140,82 C164,100 158,124 140,140Z" fill="#dfd1c4" transform="rotate(85,140,140)"/>
-      <path d="M140,140 C122,124 116,100 140,82 C164,100 158,124 140,140Z" fill="#e5d8cc" transform="rotate(157,140,140)"/>
-      <path d="M140,140 C122,124 116,100 140,82 C164,100 158,124 140,140Z" fill="#dfd1c4" transform="rotate(229,140,140)"/>
-      <path d="M140,140 C122,124 116,100 140,82 C164,100 158,124 140,140Z" fill="#e5d8cc" transform="rotate(301,140,140)"/>
-      <!-- center -->
-      <circle cx="140" cy="140" r="24" fill="#d8c9ba"/>
-      <circle cx="140" cy="140" r="16" fill="#ccb9a8"/>
-      <circle cx="140" cy="140" r="9" fill="#c4ae9d"/>
-    </g>
-    <!-- leaves -->
-    <ellipse cx="200" cy="210" rx="32" ry="10" fill="#9eb89a" opacity=".6" transform="rotate(-35,200,210)"/>
-    <ellipse cx="215" cy="195" rx="26" ry="8" fill="#8aaa86" opacity=".5" transform="rotate(-20,215,195)"/>
-  </svg>
-
-  <!-- Rose bottom-right -->
-  <svg class="rose rose-br" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
-    <g opacity=".85">
-      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(0,140,140)"/>
-      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#f9f4ef" transform="rotate(51.4,140,140)"/>
-      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(102.9,140,140)"/>
-      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#f9f4ef" transform="rotate(154.3,140,140)"/>
-      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(205.7,140,140)"/>
-      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#f9f4ef" transform="rotate(257.1,140,140)"/>
-      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(308.6,140,140)"/>
-      <path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#f2e8de" transform="rotate(25.7,140,140)"/>
-      <path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#ede3d8" transform="rotate(85.7,140,140)"/>
-      <path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#f2e8de" transform="rotate(145.7,140,140)"/>
-      <path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#ede3d8" transform="rotate(205.7,140,140)"/>
-      <path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#f2e8de" transform="rotate(265.7,140,140)"/>
-      <path d="M140,140 C122,124 116,100 140,82 C164,100 158,124 140,140Z" fill="#e5d8cc" transform="rotate(13,140,140)"/>
-      <path d="M140,140 C122,124 116,100 140,82 C164,100 158,124 140,140Z" fill="#e5d8cc" transform="rotate(157,140,140)"/>
-      <path d="M140,140 C122,124 116,100 140,82 C164,100 158,124 140,140Z" fill="#e5d8cc" transform="rotate(301,140,140)"/>
-      <circle cx="140" cy="140" r="24" fill="#d8c9ba"/>
-      <circle cx="140" cy="140" r="16" fill="#ccb9a8"/>
-      <circle cx="140" cy="140" r="9" fill="#c4ae9d"/>
-    </g>
-    <ellipse cx="80" cy="70" rx="30" ry="9" fill="#9eb89a" opacity=".6" transform="rotate(-35,80,70)"/>
-    <ellipse cx="65" cy="85" rx="24" ry="8" fill="#8aaa86" opacity=".5" transform="rotate(-20,65,85)"/>
-  </svg>
-
-  <!-- Rose top-right -->
-  <svg class="rose rose-tr" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
-    <g opacity=".75">
-      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(0,140,140)"/>
-      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#f9f4ef" transform="rotate(72,140,140)"/>
-      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(144,140,140)"/>
-      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#f9f4ef" transform="rotate(216,140,140)"/>
-      <path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fcf8f4" transform="rotate(288,140,140)"/>
-      <path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#f2e8de" transform="rotate(36,140,140)"/>
-      <path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#ede3d8" transform="rotate(108,140,140)"/>
-      <path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#f2e8de" transform="rotate(180,140,140)"/>
-      <path d="M140,140 C118,120 110,90 140,65 C170,90 162,120 140,140Z" fill="#ede3d8" transform="rotate(252,140,140)"/>
-      <path d="M140,140 C122,124 116,100 140,82 C164,100 158,124 140,140Z" fill="#e5d8cc" transform="rotate(54,140,140)"/>
-      <path d="M140,140 C122,124 116,100 140,82 C164,100 158,124 140,140Z" fill="#e5d8cc" transform="rotate(180,140,140)"/>
-      <circle cx="140" cy="140" r="22" fill="#d8c9ba"/>
-      <circle cx="140" cy="140" r="14" fill="#ccb9a8"/>
-    </g>
-  </svg>
-
   <div class="hero-inner">
-    <div class="hero-tag">— ҚЫЗ ҰЗАТУ —</div>
-    <h1 class="hero-name">Гүлсім</h1>
-    <div class="pearls">
-      <div class="p p-s"></div>
-      <div class="p p-m"></div>
-      <div class="p p-l"></div>
-      <div class="p p-m"></div>
-      <div class="p p-s"></div>
+    <div class="hero-top">
+      <div class="hero-tag">— ҚЫЗ ҰЗАТУ —</div>
+      <h1 class="hero-name">Гүлсім</h1>
     </div>
-    <div class="hero-event">QYZ UZATU</div>
-    <div class="gold-line"></div>
-    <div class="hero-date">24 &thinsp;|&thinsp; 08 &thinsp;|&thinsp; 2026</div>
+    <div class="hero-bottom">
+      <div class="pearls">
+        <div class="p p-s"></div>
+        <div class="p p-m"></div>
+        <div class="p p-l"></div>
+        <div class="p p-m"></div>
+        <div class="p p-s"></div>
+      </div>
+      <div class="hero-event">QYZ UZATU</div>
+      <div class="gold-line"></div>
+      <div class="hero-date">24 &thinsp;|&thinsp; 08 &thinsp;|&thinsp; 2026</div>
+    </div>
   </div>
 
   <div class="scroll-hint">
@@ -805,8 +722,6 @@ footer::before{content:'';position:absolute;inset:0;background:linear-gradient(1
 
 <!-- RSVP -->
 <div class="rsvp" data-aos="fade-up">
-  <svg class="rsvp-rose rsvp-rose-tl" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg"><g><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fff" transform="rotate(0,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fff" transform="rotate(51.4,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fff" transform="rotate(102.9,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fff" transform="rotate(154.3,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fff" transform="rotate(205.7,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fff" transform="rotate(257.1,140,140)"/><circle cx="140" cy="140" r="22" fill="#c4a07a"/><circle cx="140" cy="140" r="13" fill="#b8936a"/></g></svg>
-  <svg class="rsvp-rose rsvp-rose-br" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg"><g><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fff" transform="rotate(0,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fff" transform="rotate(51.4,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fff" transform="rotate(102.9,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fff" transform="rotate(154.3,140,140)"/><path d="M140,140 C112,115 102,78 140,48 C178,78 168,115 140,140Z" fill="#fff" transform="rotate(205.7,140,140)"/><circle cx="140" cy="140" r="22" fill="#c4a07a"/><circle cx="140" cy="140" r="13" fill="#b8936a"/></g></svg>
   <div class="sec-label" style="color:var(--gold)">РАСТАУ</div>
   <div class="rsvp-heading">Аты-жөніңіз:</div>
   <form class="rsvp-form" id="rsvpForm">
