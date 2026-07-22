@@ -78,6 +78,16 @@ body{
 /* Hero content */
 .hero-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center}
 
+.hero-photo{
+  width:clamp(120px,34vw,170px);
+  aspect-ratio:2/3;
+  object-fit:cover;
+  border-radius:999px 999px 12px 12px;
+  border:3px solid rgba(255,255,255,.85);
+  box-shadow:0 10px 34px rgba(44,26,18,.28);
+  margin-bottom:22px;
+}
+
 .hero-tag{
   font-family:'Montserrat',sans-serif;
   font-size:10px;letter-spacing:5px;
@@ -326,6 +336,19 @@ body{
   font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
   font-size:38px;color:#fff;
   padding:48px 0;line-height:1.6;
+}
+
+/* ── CLOSING PHOTO ── */
+.closing-photo{
+  padding:0 24px 64px;
+  background:var(--bg);
+  text-align:center;
+}
+.closing-photo-img{
+  max-width:380px;width:100%;
+  border-radius:18px;
+  box-shadow:0 10px 44px rgba(44,26,18,.2);
+  display:block;margin:0 auto;
 }
 
 /* ── FOOTER ── */
@@ -683,6 +706,7 @@ footer::before{content:'';position:absolute;inset:0;background:linear-gradient(1
   </svg>
 
   <div class="hero-inner">
+    <img class="hero-photo" src="hero-photo.jpg" alt="Гүлсім">
     <div class="hero-tag">— ҚЫЗ ҰЗАТУ —</div>
     <h1 class="hero-name">Гүлсім</h1>
     <div class="pearls">
@@ -727,7 +751,7 @@ footer::before{content:'';position:absolute;inset:0;background:linear-gradient(1
   <div class="i-greeting">Құрметті қонақтар!</div>
   <p class="i-body">Сіздерді аяулы</p>
   <div class="i-bride">Гүлсім</div>
-  <p class="i-body">қызымыздың ұзату тойына арналған<br>салтанатты ас дастарханымыздың<br>қадірлі қонағы болуға шақырамыз!</p>
+  <p class="i-body">қызымыздың ұзату тойына арналған<br>салтанатты ақ дастарханымыздың<br>қадірлі қонағы болуға шақырамыз!</p>
 
   <div class="i-sep">
     <div class="p p-s"></div>
@@ -825,6 +849,11 @@ footer::before{content:'';position:absolute;inset:0;background:linear-gradient(1
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
   </button>
   <span class="music-note">МУЗЫКА</span>
+</div>
+
+<!-- CLOSING PHOTO -->
+<div class="closing-photo" data-aos="fade-up">
+  <img class="closing-photo-img" src="footer-photo.jpg" alt="Гүлсім">
 </div>
 
 <!-- FOOTER -->
