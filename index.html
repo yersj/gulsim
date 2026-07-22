@@ -49,17 +49,15 @@ body{
   position:absolute;
   inset:0;
   background:
-    radial-gradient(ellipse 80% 60% at 15% 50%,rgba(255,255,255,.55) 0%,transparent 60%),
-    radial-gradient(ellipse 60% 80% at 85% 50%,rgba(255,255,255,.35) 0%,transparent 60%),
-    radial-gradient(ellipse 100% 40% at 50% 0%,rgba(255,248,240,.8) 0%,transparent 50%),
-    linear-gradient(155deg,#faf5ef 0%,#ede5db 40%,#f5ede4 70%,#e8ddd4 100%);
+    linear-gradient(180deg,rgba(18,10,6,.6) 0%,rgba(18,10,6,.2) 32%,rgba(18,10,6,.3) 62%,rgba(18,10,6,.68) 100%),
+    url('hero-photo.jpg') center 18% / cover no-repeat;
   z-index:0;
 }
 .hero-bg::after{
   content:'';
   position:absolute;
   inset:0;
-  background:repeating-linear-gradient(108deg,transparent,transparent 6px,rgba(255,255,255,.06) 6px,rgba(255,255,255,.06) 7px);
+  background:repeating-linear-gradient(108deg,transparent,transparent 6px,rgba(255,255,255,.04) 6px,rgba(255,255,255,.04) 7px);
 }
 
 /* Roses */
@@ -78,20 +76,11 @@ body{
 /* Hero content */
 .hero-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center}
 
-.hero-photo{
-  width:clamp(120px,34vw,170px);
-  aspect-ratio:2/3;
-  object-fit:cover;
-  border-radius:999px 999px 12px 12px;
-  border:3px solid rgba(255,255,255,.85);
-  box-shadow:0 10px 34px rgba(44,26,18,.28);
-  margin-bottom:22px;
-}
-
 .hero-tag{
   font-family:'Montserrat',sans-serif;
   font-size:10px;letter-spacing:5px;
-  color:var(--brown-md);opacity:.6;
+  color:#fff;opacity:.85;
+  text-shadow:0 2px 12px rgba(0,0,0,.35);
   margin-bottom:14px;
 }
 
@@ -99,9 +88,9 @@ body{
   font-family:'Cormorant Garamond',serif;
   font-style:italic;font-weight:300;
   font-size:clamp(88px,24vw,155px);
-  color:var(--brown);
+  color:#fff;
   line-height:.9;
-  text-shadow:0 4px 30px rgba(196,160,122,.25);
+  text-shadow:0 4px 30px rgba(0,0,0,.4);
   margin-bottom:18px;
 }
 
@@ -115,7 +104,8 @@ body{
   font-family:'Montserrat',sans-serif;
   font-size:clamp(11px,3vw,14px);
   font-weight:300;letter-spacing:7px;
-  color:var(--brown-md);
+  color:rgba(255,255,255,.85);
+  text-shadow:0 2px 12px rgba(0,0,0,.35);
   margin-bottom:18px;
 }
 
@@ -124,7 +114,8 @@ body{
 .hero-date{
   font-size:clamp(18px,5vw,26px);
   font-weight:300;letter-spacing:10px;
-  color:var(--brown);
+  color:#fff;
+  text-shadow:0 2px 14px rgba(0,0,0,.4);
 }
 
 .scroll-hint{
@@ -706,7 +697,6 @@ footer::before{content:'';position:absolute;inset:0;background:linear-gradient(1
   </svg>
 
   <div class="hero-inner">
-    <img class="hero-photo" src="hero-photo.jpg" alt="Гүлсім">
     <div class="hero-tag">— ҚЫЗ ҰЗАТУ —</div>
     <h1 class="hero-name">Гүлсім</h1>
     <div class="pearls">
@@ -722,7 +712,7 @@ footer::before{content:'';position:absolute;inset:0;background:linear-gradient(1
   </div>
 
   <div class="scroll-hint">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5a3826" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
       <polyline points="6 9 12 15 18 9"/>
     </svg>
   </div>
