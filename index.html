@@ -48,9 +48,13 @@ body{
 .hero-bg{
   position:absolute;
   inset:0;
-  background:
-    linear-gradient(180deg,rgba(18,10,6,.6) 0%,rgba(18,10,6,.2) 32%,rgba(18,10,6,.3) 62%,rgba(18,10,6,.68) 100%),
-    url('hero-photo.jpg') center 18% / cover no-repeat;
+  background-image:
+    linear-gradient(180deg,rgba(16,9,5,.62) 0%,rgba(16,9,5,.1) 28%,rgba(16,9,5,.2) 58%,rgba(16,9,5,.7) 100%),
+    url('hero-photo.jpg'),
+    linear-gradient(155deg,#3a2418 0%,#2b1a12 45%,#1f130c 100%);
+  background-position:center center, center top, center center;
+  background-size:cover, contain, cover;
+  background-repeat:no-repeat, no-repeat, no-repeat;
   z-index:0;
 }
 .hero-bg::after{
