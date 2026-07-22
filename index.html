@@ -80,9 +80,10 @@ body{
 
 .hero-tag{
   font-family:'Montserrat',sans-serif;
-  font-size:10px;letter-spacing:5px;
-  color:#fff;opacity:.85;
+  font-size:clamp(16px,4.5vw,24px);letter-spacing:5px;
+  color:#fff;opacity:.9;
   text-shadow:0 2px 12px rgba(0,0,0,.35);
+  margin-top:8px;
   margin-bottom:14px;
 }
 
@@ -520,7 +521,7 @@ footer::before{content:'';position:absolute;inset:0;background:linear-gradient(1
 @media(max-width:600px){
   /* Hero */
   .hero{padding:70px 20px 90px}
-  .hero-tag{letter-spacing:3px;font-size:9px}
+  .hero-tag{letter-spacing:3px}
   .hero-date{letter-spacing:6px}
 
   /* Calendar */
@@ -614,8 +615,8 @@ footer::before{content:'';position:absolute;inset:0;background:linear-gradient(1
 
   <div class="hero-inner">
     <div class="hero-top">
-      <div class="hero-tag">— ҚЫЗ ҰЗАТУ —</div>
       <h1 class="hero-name">Гүлсім</h1>
+      <div class="hero-tag">— ҚЫЗ ҰЗАТУ —</div>
     </div>
     <div class="hero-bottom">
       <div class="pearls">
